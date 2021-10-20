@@ -22,5 +22,5 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/users', [UsersController::class, 'index']);
-    Route::get('/user-profile', [UsersProfilesController::class,'show']);
+    Route::get('/user-profile', [UsersProfilesController::class,'show'])->name('userProfile');
 });
