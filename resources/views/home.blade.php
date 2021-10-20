@@ -1,6 +1,7 @@
+<div>
 <a href="/login">Login</a>
+</div>
+<br>
+<div>
 <a href="/register">Register</a>
-<form action="/logout" method="post">
-    @csrf
-    <input type="submit" value="logout">
-</form>
+</div>

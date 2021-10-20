@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\UsersProfilesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UsersController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('auth.login');
 });
 
-Route::get('/home', function () {
-    return view('home');
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/users', [UsersController::class, 'index']);
+    Route::get('/user-profile', [UsersProfilesController::class,'show']);
 });
