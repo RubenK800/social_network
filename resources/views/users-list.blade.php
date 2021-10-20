@@ -1,4 +1,4 @@
-@extends('layouts.layout1')
+@extends('layouts.main')
 @section('content')
 <div class="container">
     @foreach ($users as $user)
