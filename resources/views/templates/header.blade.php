@@ -2,13 +2,12 @@
     <div class="container">
         <a class="navbar-brand" href="">Ci4 Login</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item" {{--{{ Route::currentRouteNamed('') ? 'active' : '' }}--}}>
-                    <a class="nav-link active" aria-current="page" href="/dashboard">Dashboard</a>
+                <li class="nav-item">
+                    <a class="nav-link " aria-current="page" href="{{route('user.profile.index')}}">Dashboard</a>
                 </li>
-                <li class="nav-item {{ Route::currentRouteNamed('userProfile') ? 'active' : '' }}">
-                    <a class="nav-link" href="/user-profile">Profile</a>
+                <li class="nav-item">
+                    <a class="nav-link {{ Route::currentRouteNamed('user.profile.show') ? 'active' : '' }}" href="{{route('user.profile.index')}}">Profile</a>
                 </li>
             </ul>
             <form action="/logout" method="post" class="navbar-nav my-2 my-lg-0">
@@ -18,3 +17,5 @@
         </div>
     </div>
 </nav>
+
+{{--{{route('test', $id)}}--}}

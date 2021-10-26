@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UsersAvatarsController;
 use App\Http\Controllers\UsersProfilesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -22,5 +23,9 @@ Route::get('/', function () {
 
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/users', [UsersController::class, 'index']);
-    Route::get('/user-profile', [UsersProfilesController::class,'show'])->name('userProfile');
+    Route::get('/user-profile', [UsersProfilesController::class,'index'])->name('user.profile.index');
+    Route::get('/user-profile/{id}', [UsersAvatarsController::class,'show'])->name('user.profile.show');
+    Route::post('upload-avatar',[UsersAvatarsController::class,'store'])->name('upload-avatar');
+    Route::get('avatar/{id}',[UsersAvatarsController::class,'show'])->name('show-avatar');
+
 });

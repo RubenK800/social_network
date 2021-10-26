@@ -1,11 +1,18 @@
-{{--@if (auth()->user()/*session()->get('isLoggedIn')*/)--}}
 @extends('layouts.main')
 @section('content')
 <div class="d-flex justify-content-center">
-    <img src="https://img.etimg.com/thumb/msid-79066167,width-1200,height-900,imgsize-380692,resizemode-8,quality-100/prime/technology-and-startups/appification-of-space-is-a-chance-to-leverage-a-big-shift-to-unlock-value-vcs-and-isro-take-note-.jpg"
-         alt="Sorry I'm a table, go and find your picture yourself, cause I'm very lazy to do that">
+    @if($avatar!=null)
+    <img src="{{$avatar->user_avatar_directory/*route('show-avatar', ['id' => Auth::id()])*/}}"
+         alt="{{$avatar->user_avatar_directory}}{{--Sorry I'm a table, go and find your picture yourself, cause I'm very lazy to do that--}}" width="250px">
+    @endif
 </div>
+
+<form method="post" action="{{route('upload-avatar')}}" enctype = "multipart/form-data">
+    @csrf
+    <input type="file" name="img[]" multiple>
+    <input type="submit">
+</form>
 @endsection
-{{--@else--}}
-{{--    {{URL::route('login')}}--}}
-{{--@endif--}}
+
+
+
