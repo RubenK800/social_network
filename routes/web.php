@@ -27,5 +27,5 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/user-profile/{id}', [UsersAvatarsController::class,'show'])->name('user.profile.show');
     Route::post('upload-avatar',[UsersAvatarsController::class,'store'])->name('upload-avatar');
     Route::get('avatar/{id}',[UsersAvatarsController::class,'show'])->name('show-avatar');
-
 });
+

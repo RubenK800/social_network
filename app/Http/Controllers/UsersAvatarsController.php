@@ -17,9 +17,8 @@ class UsersAvatarsController
 
     public function store(Request $request)
     {
-        $files = $request->file('img');
-        foreach ($files as $file) {
-            $userId = Auth::id();
+        $file = $request->file('img');
+        $userId = Auth::id();
             $file->storeAs('avatars', 'avatar-of-user' . $userId . '.jpg');
             $directory = asset('storage/'.'avatars/avatar-of-user' . $userId . '.jpg');
             $entry = Avatar::where('user_id', $userId)->first();
@@ -27,10 +26,8 @@ class UsersAvatarsController
                 // user doesn't exist
                 Avatar::insert(['user_id' => $userId, 'user_avatar_directory' => $directory]);
             }
-        }
-        $userId = Auth::id();
         $avatar = Avatar::where('user_id',$userId)->first();
-        return /*view('user-profile.profile',['avatar'=>$avatar])*/ Redirect::route('user.profile.index')->with(['avatar' => $avatar]);
+        return Redirect::route('user.profile.index')->with(['avatar' => $avatar]);
     }
 
     public function show($id){
