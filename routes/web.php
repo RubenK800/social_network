@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersAvatarsController;
 use App\Http\Controllers\UsersProfilesController;
+use App\Http\Controllers\UsersWallsController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
@@ -27,5 +29,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('/user-profile/{id}', [UsersAvatarsController::class,'show'])->name('user.profile.show');
     Route::post('upload-avatar',[UsersAvatarsController::class,'store'])->name('upload-avatar');
     Route::get('avatar/{id}',[UsersAvatarsController::class,'show'])->name('show-avatar');
+    Route::get('/user-wall/{id}',[UsersWallsController::class,'show'])->name('user-wall');
+    Route::post('save-post',[PostsController::class,'store'])->name('save-post');
 });
+
 

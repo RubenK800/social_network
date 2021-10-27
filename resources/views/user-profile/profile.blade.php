@@ -12,6 +12,12 @@
     <input type="file" name="img">
     <input type="submit">
 </form>
+
+<div>
+    <a href="{{route('user-wall', ['id' => Auth::id()])}}">
+        Wall
+    </a>
+</div>
 @endsection
 
 
