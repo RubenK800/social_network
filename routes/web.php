@@ -24,12 +24,12 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => ['auth']], function() {
-    Route::get('/users', [UsersController::class, 'index']);
-    Route::get('/user-profile', [UsersProfilesController::class,'index'])->name('user.profile.index');
-    Route::get('/user-profile/{id}', [UsersAvatarsController::class,'show'])->name('user.profile.show');
+    Route::get('users', [UsersController::class, 'index']);
+    Route::get('user-profile', [UsersProfilesController::class,'index'])->name('user.profile.index');
+    Route::get('user-profile/{id}', [UsersAvatarsController::class,'show'])->name('user.profile.show');
     Route::post('upload-avatar',[UsersAvatarsController::class,'store'])->name('upload-avatar');
     Route::get('avatar/{id}',[UsersAvatarsController::class,'show'])->name('show-avatar');
-    Route::get('/user-wall/{id}',[UsersWallsController::class,'show'])->name('user-wall');
+    Route::get('user-wall',[UsersWallsController::class,'index'])->name('user-wall.index');
     Route::post('save-post',[PostsController::class,'store'])->name('save-post');
 });
 

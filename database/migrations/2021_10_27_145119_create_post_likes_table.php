@@ -17,7 +17,8 @@ class CreatePostLikesTable extends Migration
             $table->id();
             $table->integer('post_id');
             $table->integer('user_id');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

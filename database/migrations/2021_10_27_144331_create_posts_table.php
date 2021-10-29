@@ -20,7 +20,8 @@ class CreatePostsTable extends Migration
             $table->integer('likes_count');
             $table->integer('comments_count');
             $table->integer('reposts_count');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

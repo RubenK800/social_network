@@ -7,10 +7,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @method static insert(array $array)
  * @method static where(string $string, int|string|null $userId)
+ * @method static insert(array $array)
  */
-class Avatar extends Model
+class UsersAvatar extends Model
 {
-    protected $table = 'users_avatars';
+
 }

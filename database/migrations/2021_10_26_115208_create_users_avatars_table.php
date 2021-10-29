@@ -16,8 +16,9 @@ class CreateUsersAvatarsTable extends Migration
         Schema::create('users_avatars', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->string('user_avatar_directory',250);
-            $table->timestamps();
+            $table->text('user_avatar_directory');
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

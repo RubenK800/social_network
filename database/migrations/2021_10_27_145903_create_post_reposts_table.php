@@ -19,7 +19,8 @@ class CreatePostRepostsTable extends Migration
             $table->integer('sender_id');
             $table->integer('getter_id');
             $table->text('repost_url');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 
