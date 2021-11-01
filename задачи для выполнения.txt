@@ -19,3 +19,6 @@ nejak85744@fretice.com
 $2y$10$R/Kah6UA6AO2P/ybtHjbfe87i5gGmhSoVy7Fq8wwlTA5rwW8.OKRK
 2021-10-26 12:12:08
 2021-10-26 12:12:38
+
+
+/*likeIt({{$post['id']}})*/

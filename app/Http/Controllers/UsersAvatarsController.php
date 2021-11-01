@@ -30,9 +30,7 @@ class UsersAvatarsController
         return Redirect::route('user.profile.index')->with(['avatar' => $avatar]);
     }
 
-    public function show($id){
-        $userId = $id;
-        $avatar = UsersAvatar::where('id',$userId)->first();
-        return view('user-profile.profile',['avatar'=>$avatar]);
+    public function show(UsersAvatar $userAvatar){
+        return view('user-profile.profile',['avatar'=>$userAvatar]);
     }
 }
