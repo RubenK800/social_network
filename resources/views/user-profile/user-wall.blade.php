@@ -28,8 +28,8 @@
             </div>
             <div>
                 @foreach($post->images as $image)
-                <img src = "{{$image['image_directory']}}"
-                     alt = "{{$image['image_directory']}}" height="250px">
+                <img src = "/storage/post_pics/{{$image['image_name']}}"
+                     alt = "/storage/post_pics/{{$image['image_name']}}" height="250px">
                 @endforeach
             </div>
             <hr>
@@ -62,13 +62,14 @@
         }
     };
 
-    function likeIt(postId) {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 
+    function likeIt(postId)
+    {
         $.ajax({
             url:'add-like',
             data:{'post_id':postId},

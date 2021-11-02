@@ -17,8 +17,6 @@ class CreatePostImagesTable extends Migration
             $table->id();
             $table->integer('post_id');
             $table->text('image_name');
-            $table->text('image_directory');
-            $table->integer('image_size');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
