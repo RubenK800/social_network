@@ -28,8 +28,8 @@
             </div>
             <div>
                 @foreach($post->images as $image)
-                <img src = "{{asset('storage/' . 'post_pics/' . $image['image_name'])}}"
-                     alt = "/storage/post_pics/{{$image['image_name']}}" height="250px">
+                <img src = "{{asset('storage/post_pics/' . $image['image_name'])}}"
+                     alt = "{{asset('storage/post_pics/' . $image['image_name'])}}" height="250px">
                 @endforeach
             </div>
             <hr>

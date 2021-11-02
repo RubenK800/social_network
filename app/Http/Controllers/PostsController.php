@@ -50,7 +50,7 @@ class PostsController extends Controller
         return $post->id;
     }
 
-    private function savePostImage($postId, $postImageName){
+    private function savePostImage($postId, $postImageName):void {
         $postImage = new PostImage();
         $postImage->post_id = $postId;
         $postImage->image_name = $postImageName;
