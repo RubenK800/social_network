@@ -20,11 +20,12 @@ class UsersAvatarsController
         $file = $request->file('img');
         $userId = Auth::id();
             $file->storeAs('avatars', 'avatar-of-user' . $userId . '.jpg');
-            $directory = asset('storage/'.'avatars/avatar-of-user' . $userId . '.jpg');
+            //$directory = asset('storage/'.'avatars/avatar-of-user' . $userId . '.jpg');
+            $name = 'avatar-of-user' . $userId . '.jpg';
             $entry = UsersAvatar::where('user_id', $userId)->first();
             if ($entry === null) {
                 // user doesn't exist
-                UsersAvatar::insert(['user_id' => $userId, 'user_avatar_directory' => $directory]);
+                UsersAvatar::insert(['user_id' => $userId, 'user_avatar_name' => $name]);
             }
         $avatar = UsersAvatar::where('user_id',$userId)->first();
         return Redirect::route('user.profile.index')->with(['avatar' => $avatar]);

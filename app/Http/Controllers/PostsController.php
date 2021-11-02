@@ -38,7 +38,7 @@ class PostsController extends Controller
         Redirect::route('user-wall.index')->with(['posts'=>$posts]);
     }
 
-    private function createPost($postBody){
+    private function createPost($postBody):int {
         $post = new Post();
         $post->user_id = Auth::id();
         $post->body = $postBody;
