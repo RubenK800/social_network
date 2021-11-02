@@ -14,20 +14,13 @@ class LikesController extends Controller
     {
 //        $data = $request->post_id; //тоже работает
         $data = $request->input('post_id',0);
-//        $currentLikesCount = Post::where('id', $data)->value('likes_count');
-//        $newLikesCount = $currentLikesCount+1;
         if (PostLike::where('user_id', Auth::id())->where('post_id',$data)->count() === 0){
-            $currentLikesCount = Post::where('id', $data)->value('likes_count');
-            $newLikesCount = $currentLikesCount+1;
-            Post::where('id',$data)->update(['likes_count' => $newLikesCount]);
+            Post::where('id', $data)->increment('likes_count',1);
             PostLike::insert(['user_id' => Auth::id(), 'post_id'=>$data]);
         }else{
-            $currentLikesCount = Post::where('id', $data)->value('likes_count');
-            $newLikesCount = $currentLikesCount-1;
-            Post::where('id',$data)->update(['likes_count' => $newLikesCount]);
+            Post::where('id',$data)->decrement('likes_count',1);
             PostLike::where('user_id', Auth::id())->where('post_id',$data)->delete();
         }
-
         return response($data); //вместо echo $data
     }
 }
