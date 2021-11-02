@@ -27,11 +27,9 @@
                 {{$post['body']}}
             </div>
             <div>
-                @foreach($postImages as $image)
-                    @if($image['post_id'] === $post['id'])
+                @foreach($post->images as $image)
                 <img src = "{{$image['image_directory']}}"
                      alt = "{{$image['image_directory']}}" height="250px">
-                    @endif
                 @endforeach
             </div>
             <hr>
