@@ -2,8 +2,8 @@
 @section('content')
 <div class="d-flex justify-content-center">
     @if($avatar!=null)
-    <img src="{{asset('storage/avatars/' . $avatar->user_avatar_name."?v=".microtime())}}"
-         alt="{{asset('storage/avatars/' . $avatar->user_avatar_name."?v=".microtime())}}" width="250px">
+    <img src="{{asset('storage/avatars/avatar-of-user'.\Illuminate\Support\Facades\Auth::id().'/' . $avatar->user_avatar_name)}}"
+         alt="{{asset('storage/avatars/avatar-of-user'.\Illuminate\Support\Facades\Auth::id().'/' . $avatar->user_avatar_name)}}" width="250px">
     @endif
 </div>
 
