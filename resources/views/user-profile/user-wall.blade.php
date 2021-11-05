@@ -35,16 +35,15 @@
             </div>
             <hr>
             <div>
-                <button onclick="likeIt({{$post['id']}})">Like it</button>
+                <button class="likeIt" data-post-like="{{$post['id']}}">Like it</button>
                 <button onclick="">Comments</button>
             </div>
             <hr>
             <div id="comments-place">
                 @foreach($post->comments as $comment)
                     <br>
-{{--                <div>{{\App\Models\User::where('id',$postComment->comments->writer_user_id)->value('name')}}</div>--}}
                     <div>
-                         {{$comment->users[0]['name']}}
+                         {{$comment->user['name']}}
                     </div>
                     <div>{{$comment['comment_text']}}</div>
                     <br>
@@ -81,35 +80,36 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    let submit = document.getElementById('submit');
-    submit.onclick = function () {
-        if(document.getElementById("image").files.length === 0 && document.getElementById("text").value===''){
-            alert("nothing to post");
-                return false;
-        }
-    };
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    function likeIt(postId)
-    {
-        $.ajax({
-            url:'add-like',
-            data:{'post_id':postId},
-            type:'post',
-            success:  function (response) {
-                console.log(response);
-            },
-            error: function(x,xs,xt){
-                console.log(x);
-            }
-        });
-    }
+<script src="js/user-wall.js">
+    //src="js/users-wall/user-wall.js"
+    // let submit = document.getElementById('submit');
+    // submit.onclick = function () {
+    //     if(document.getElementById("image").files.length === 0 && document.getElementById("text").value===''){
+    //         alert("nothing to post");
+    //             return false;
+    //     }
+    // };
+    //
+    // $.ajaxSetup({
+    //     headers: {
+    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //     }
+    // });
+    //
+    // function likeIt(postId)
+    // {
+    //     $.ajax({
+    //         url:'add-like',
+    //         data:{'post_id':postId},
+    //         type:'post',
+    //         success:  function (response) {
+    //             console.log(response);
+    //         },
+    //         error: function(x,xs,xt){
+    //             console.log(x);
+    //         }
+    //     });
+    // }
 
 </script>
 @endsection

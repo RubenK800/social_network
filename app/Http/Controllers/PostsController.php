@@ -20,7 +20,7 @@ class PostsController extends Controller
     {
         $files = $request->file('img');
         $postBody = $request->get('post-body');
-        if (!is_null($files)) {
+        if ($files) {
             $postId = $this->createPost($postBody);
             foreach($files as $file) {
                 $file->storeAs('post_pics', $file->getClientOriginalName());
@@ -28,7 +28,7 @@ class PostsController extends Controller
                 $this->savePostImage($postId, $postImageName);
             }
         } else {
-            if (!is_null($postBody)) {
+            if ($postBody) {
                 Post::insert(['user_id' => Auth::id(), 'body' => $postBody, 'likes_count' => 0, 'comments_count' => 0, 'reposts_count' => 0]);
             }
         }

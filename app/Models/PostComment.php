@@ -13,8 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class PostComment extends Model
 {
-    public function users(){
-        return $this->hasMany(User::class, 'id','writer_user_id'); //localkey - is not the column of your User model
+    public function user(){
+        return $this->hasOne(User::class, 'id','writer_user_id'); //localkey - is not the column of your User model
                                                                                           //in our case it's the column of our PostComment model
                                                                                           //User is the PostComment's relation
     }

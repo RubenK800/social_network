@@ -15,13 +15,13 @@ class IndependentCommentsController extends Controller
         $commentText = $request->get('comment-text');
         $postId = $request->get('postId');
 
-        if (!is_null($image)) {
+        if ($image) {
                 $commentId = $this->createIndependentComment($commentText,$postId);
                 $image->storeAs('comment_pics', $image->getClientOriginalName());
                 $imageName = $image->getClientOriginalName();
                 $this->saveCommentImage($commentId, $imageName);
         } else {
-            if (!is_null($commentText)) {
+            if ($commentText) {
                 $this->createIndependentComment($commentText, $postId);
             }
         }

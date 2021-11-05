@@ -13,7 +13,7 @@ class UsersWallsController
 {
     public function index()
     {
-        $posts = Auth::user()->posts()->with('images','comments.users')->get();
+        $posts = Auth::user()->posts()->with('images','comments.user')->get();
         //ddd($posts);
         return view('user-profile.user-wall',['posts' => $posts]);
     }
