@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Models;
-
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,12 +20,11 @@ class Post extends Model
 //        return $this->hasMany(PostLike::class, 'post_id');
 //    }
 //
-//    public function postComments(){
-//        return $this->hasMany(PostComment::class, 'post_id');
-//    }
+    public function comments(){
+        return $this->hasMany(PostComment::class, 'post_id');
+    }
 //
 //    public function postReposts(){
 //        return $this->hasMany(PostRepost::class, 'post_id');
 //    }
-
 }

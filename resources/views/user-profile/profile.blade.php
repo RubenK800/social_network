@@ -14,7 +14,7 @@
 </form>
 
 <div>
-    <a href="{{route('user-wall.index', ['id' => Auth::id()])}}">
+    <a href="{{route('user-wall.index'/*, ['id' => Auth::id()]*/)}}">
         Wall
     </a>
 </div>

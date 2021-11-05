@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IndependentCommentsController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\PostsController;
 use App\Http\Controllers\UsersAvatarsController;
@@ -33,6 +34,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::get('user-wall',[UsersWallsController::class,'index'])->name('user-wall.index');
     Route::post('save-post',[PostsController::class,'store'])->name('save-post');
     Route::post('add-like',[LikesController::class,'store'])->name('add-like');
+    Route::post('ind-comments',[IndependentCommentsController::class,'store'])->name('add-independent-comment');
 });
 
 

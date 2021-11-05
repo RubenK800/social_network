@@ -29,12 +29,40 @@
             <div>
                 @foreach($post->images as $image)
                 <img src = "{{asset('storage/post_pics/' . $image['image_name'])}}"
-                     alt = "{{asset('storage/post_pics/' . $image['image_name'])}}" height="250px">
+                     alt = "{{asset('storage/post_pics/' . $image['image_name'])}}"
+                     height="250px">
                 @endforeach
             </div>
             <hr>
             <div>
                 <button onclick="likeIt({{$post['id']}})">Like it</button>
+                <button onclick="">Comments</button>
+            </div>
+            <hr>
+            <div id="comments-place">
+                @foreach($post->comments as $comment)
+                    <br>
+{{--                <div>{{\App\Models\User::where('id',$postComment->comments->writer_user_id)->value('name')}}</div>--}}
+                    <div>
+                         {{$comment->users[0]['name']}}
+                    </div>
+                    <div>{{$comment['comment_text']}}</div>
+                    <br>
+                @endforeach
+            </div>
+            <hr>
+            <div>
+                <form action="{{route('add-independent-comment', ['postId' => $post['id']])}}" method='post'>
+                    @csrf
+                    <label>
+                        <input type="text" name="comment-text">
+                    </label>
+                    <label for="comment_image" style="border: solid #1a202c 1px">Add Image</label>
+                    <div>
+                    <input type="file" id="comment_image" name="comment_image" hidden>
+                    </div>
+                    <input type="submit" value="Send comment">
+                </form>
             </div>
             <hr>
             <div>
