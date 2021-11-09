@@ -7,7 +7,7 @@
     @endif
 </div>
 
-<form method="post" action="{{route('upload-avatar')}}" enctype = "multipart/form-data">
+<form method="post" action="{{route('avatar.store')}}" enctype = "multipart/form-data">
     @csrf
     <input type="file" name="img">
     <input type="submit">

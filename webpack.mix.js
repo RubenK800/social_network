@@ -16,4 +16,5 @@ mix.js('resources/js/app.js', 'public/js')
         //
     ])
     .js('resources/js/user-wall.js', 'public/js');
+mix.version();
 

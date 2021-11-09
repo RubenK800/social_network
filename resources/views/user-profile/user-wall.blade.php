@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-<form action="{{route('save-post')}}" method="post" enctype = "multipart/form-data">
+<form action="{{route('posts.store')}}" method="post" enctype = "multipart/form-data">
     @csrf
     <div class="col-8 mx-auto">
         <label>
@@ -36,30 +36,102 @@
             <hr>
             <div>
                 <button class="likeIt" data-post-like="{{$post['id']}}">Like it</button>
-                <button onclick="">Comments</button>
+                <button class="show-comments">Show Comments</button>
+                <button class="hide-comments" hidden>Hide Comments</button>
             </div>
             <hr>
-            <div id="comments-place">
-                @foreach($post->comments as $comment)
-                    <br>
-                    <div>
-                         {{$comment->user['name']}}
-                    </div>
-                    <div>{{$comment['comment_text']}}</div>
-                    <br>
+            <div class="comments-place" hidden>
+                @foreach($post->comments as $independentcomment)
+                    @if($independentcomment['receiver_comment_id'] === 0)
+                        <br>
+                        <div class="bg-light">
+                            <div class="text-light bg-dark">
+                                @if(!is_null($independentcomment->user))
+                                {{$independentcomment->user['name']}}
+                                @else
+                                {{'User'}}
+                                @endif
+                            </div>
+                            <div>
+                                {{$independentcomment['comment_text']}}
+{{--                                $posts[0]->comments[20]->image['image_name']--}}
+                            </div>
+                            <div>
+                                @isset($independentcomment->image['image_name'])
+                                    <img src="storage/comment_pics/{{$independentcomment->image['image_name']}}" alt="go away from me! I'm sad and angry" height="150px">
+                                @endisset
+                            </div>
+                        </div>
+                        <div>
+                            <button class="ind-comment-like" data-ind-comment-like = "{{$independentcomment['id']}}">Like</button>
+                            <button class="ind-comment-dislike" data-ind-comment-dislike ="{{$independentcomment['id']}}">Dislike</button>
+                            <button class="ind-comment-reply">Reply</button>
+                        </div>
+                        <div class="to-independent-comment-write-form" hidden>
+                            <form action="{{route('comments.store', ['postId' => $post['id'],
+                                            'receiverCommentId' => $independentcomment['id']])}}" method='post'>
+                                @csrf
+                                <label>
+                                    <input type="text" name="comment-text">
+                                </label>
+                                <label style="border: solid #1a202c 1px">Add Image
+                                    <input type="file" name="comment_image" hidden>
+                                </label>
+                                <input type="submit" value="Send comment">
+                            </form>
+                            <button class="hide-ind-comment-form">I changed my mind</button>
+                        </div>
+                    @endif
+                            <div class="ms-4">
+                                @if(!is_null($independentcomment->dependentComments))
+                                    @foreach($independentcomment->dependentComments as $dependentComment)
+                                        <br>
+                                        <div class="bg-light">
+                                        <div class="text-light bg-dark">
+                                            @if(!is_null($dependentComment->user))
+                                                {{$dependentComment->user['name']}}
+                                            @else
+                                                {{'User'}}
+                                            @endif
+                                        </div>
+                                        <div>
+                                            {{$dependentComment['comment_text']}}
+                                        </div>
+                                        </div>
+                                        <div>
+                                            <button class="d-comment-like" data-d-comment-like = "{{$dependentComment['id']}}">Like</button>
+                                            <button class="d-comment-dislike" data-d-comment-dislike ="{{$dependentComment['id']}}">Dislike</button>
+                                            <button class="d-comment-reply">Reply</button>
+                                        </div>
+                                        <div class="to-dependent-comment-write-form" hidden>
+                                            <form action="{{route('comments.store', ['postId' => $post['id'],
+                                            'receiverCommentId' => $independentcomment['id']])}}" method='post' enctype="multipart/form-data">
+                                                @csrf
+                                                <label>
+                                                    <input type="text" name="comment-text" value="{{$dependentComment->user['name']}}, ">
+                                                </label>
+                                                <label style="border: solid #1a202c 1px">Add Image
+                                                    <input type="file" name="comment_image" hidden>
+                                                </label>
+                                                <input type="submit" value="Send comment">
+                                            </form>
+                                            <button class="hide-d-comment-form">I changed my mind</button>
+                                        </div>
+                                    @endforeach
+                                @endif
+                            </div>
                 @endforeach
             </div>
             <hr>
             <div>
-                <form action="{{route('add-independent-comment', ['postId' => $post['id']])}}" method='post'>
+                <form action="{{route('comments.store', ['postId' => $post['id'], 'receiverCommentId' => 0])}}" method='post' enctype="multipart/form-data">
                     @csrf
                     <label>
                         <input type="text" name="comment-text">
                     </label>
-                    <label for="comment_image" style="border: solid #1a202c 1px">Add Image</label>
-                    <div>
-                    <input type="file" id="comment_image" name="comment_image" hidden>
-                    </div>
+                    <label style="border: solid #1a202c 1px">Add Image
+                        <input type="file" name="comment_image" hidden>
+                    </label>
                     <input type="submit" value="Send comment">
                 </form>
             </div>
@@ -68,7 +140,7 @@
                 Likes count = {{$post['likes_count']}}
             </div>
             <div>
-                Comments count = {{$post['comments_count']}}
+                Comments count = {{count($post->comments)}}{{--{{$post['comments_count']}}--}}
             </div>
             <div>
                 Reposts count = {{$post['reposts_count']}}
@@ -80,36 +152,5 @@
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="js/user-wall.js">
-    //src="js/users-wall/user-wall.js"
-    // let submit = document.getElementById('submit');
-    // submit.onclick = function () {
-    //     if(document.getElementById("image").files.length === 0 && document.getElementById("text").value===''){
-    //         alert("nothing to post");
-    //             return false;
-    //     }
-    // };
-    //
-    // $.ajaxSetup({
-    //     headers: {
-    //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //     }
-    // });
-    //
-    // function likeIt(postId)
-    // {
-    //     $.ajax({
-    //         url:'add-like',
-    //         data:{'post_id':postId},
-    //         type:'post',
-    //         success:  function (response) {
-    //             console.log(response);
-    //         },
-    //         error: function(x,xs,xt){
-    //             console.log(x);
-    //         }
-    //     });
-    // }
-
-</script>
+<script src="{{mix('js/user-wall.js')}}"></script>
 @endsection
