@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\CommentImage;
 use App\Models\Post;
 use App\Models\PostComment;
+use App\Models\PostCommentDislike;
+use App\Models\PostCommentLike;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -13,7 +15,6 @@ class CommentsController extends Controller
 {
     public function store(Request $request){
         $image = $request->file('comment_image');
-        ddd($image);
         $commentText = $request->get('comment-text');
         $postId = $request->get('postId');
         $receiver_comment_id = $request->get('receiverCommentId');
@@ -29,8 +30,36 @@ class CommentsController extends Controller
             }
         }
 
-        //$postComments = PostComment::where('post_id',$postId)->get();
-        return Redirect::route('user-wall.index')/*->with(['postIndComments' => $postComments])*/;
+        return Redirect::route('user-wall.index');
+    }
+
+    public function update($id, Request $request){
+        $image = $request->file('comment_image');
+        $commentText = $request->get('comment-text');
+
+        if ($image) {
+            $this->updateComment($id,$commentText);
+            $image->storeAs('comment_pics', $image->getClientOriginalName());
+            $imageName = $image->getClientOriginalName();
+            $this->saveCommentImage($id, $imageName);
+        } else {
+            if ($commentText) {
+                $this->updateComment($id,$commentText);
+            }
+        }
+        return Redirect::route('user-wall.index');
+    }
+
+    public function destroy($id){
+        PostComment::where('id',$id)->where('writer_user_id',Auth::id())->delete();
+        PostCommentLike::where('comment_id', $id)->where('user_id',Auth::id())->delete();
+        PostCommentDisLike::where('comment_id', $id)->where('user_id',Auth::id())->delete();
+        $image_name = CommentImage::where('comment_id',$id)->value('image_name');
+        CommentImage::where('comment_id',$id)->delete();
+        if (is_file('storage/comment_pics/'.$image_name)) {
+            unlink('storage/comment_pics/' . $image_name);
+        }
+        return Redirect::route('user-wall.index');
     }
 
     private function createComment(string $commentText, int $postId, int $receiverCommentId):int {
@@ -49,6 +78,10 @@ class CommentsController extends Controller
 //        }
         Post::where('id', $postId)->increment('comments_count', 1);
         return $comment->id;
+    }
+
+    private function updateComment($id,$newText):void {
+        PostComment::where('id',$id)->update(['comment_text'=>$newText]);
     }
 
     private function saveCommentImage(int $commentId, string $imageName):void {

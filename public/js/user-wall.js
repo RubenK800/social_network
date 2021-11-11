@@ -3,14 +3,27 @@ var __webpack_exports__ = {};
 /*!***********************************!*\
   !*** ./resources/js/user-wall.js ***!
   \***********************************/
-var submit = document.getElementById('submit');
-
-submit.onclick = function () {
+var submitPost = document.getElementById('submit-post');
+submitPost.addEventListener('click', function () {
   if (document.getElementById("image").files.length === 0 && document.getElementById("text").value === '') {
     alert("nothing to post");
     return false;
   }
+});
+var submitComment = document.getElementsByClassName('submit-comment');
+
+var _loop = function _loop(i) {
+  submitComment[i].onclick = function () {
+    if (document.getElementsByClassName("comment_image")[i].files.length === 0 && document.getElementsByClassName("comment-text")[i].value === '') {
+      alert("nothing to add");
+      return false;
+    }
+  };
 };
+
+for (var i = 0; i < submitComment.length; i++) {
+  _loop(i);
+}
 
 $.ajaxSetup({
   headers: {
@@ -115,69 +128,123 @@ var dCommentReply = document.getElementsByClassName('d-comment-reply');
 var dependentCommentWriteForm = document.getElementsByClassName('to-dependent-comment-write-form');
 var hideIndCommentFormBtn = document.getElementsByClassName('hide-ind-comment-form');
 var hideDCommentFormBtn = document.getElementsByClassName('hide-d-comment-form');
-
-var _loop = function _loop(i) {
-  commentsShowBtn[i].addEventListener('click', function () {
-    comments[i].hidden = false;
-    commentsHide[i].hidden = false;
-    commentsShowBtn[i].hidden = true;
-  });
-};
-
-for (var i = 0; i < commentsShowBtn.length; i++) {
-  _loop(i);
-}
+var hideIndCommentEditFormBtn = document.getElementsByClassName('hide-ind-comment-edit-form');
+var hideDCommentEditFormBtn = document.getElementsByClassName('hide-d-comment-edit-form');
+var indCommentEditBtnHide = document.getElementsByClassName('ind-comment-edit');
+var indCommentEditForm = document.getElementsByClassName('independent-comment-edit-form');
 
 var _loop2 = function _loop2(_i) {
-  commentsHide[_i].addEventListener('click', function () {
-    comments[_i].hidden = true;
-    commentsHide[_i].hidden = true;
-    commentsShowBtn[_i].hidden = false;
+  indCommentEditBtnHide[_i].addEventListener('click', function () {
+    alert(_i);
+    indCommentEditForm[_i].hidden = false;
   });
 };
 
-for (var _i = 0; _i < commentsShowBtn.length; _i++) {
+for (var _i = 0; _i < indCommentEditBtnHide.length; _i++) {
   _loop2(_i);
 }
 
+var dCommentEditBtnHide = document.getElementsByClassName('d-comment-edit');
+var dCommentEditForm = document.getElementsByClassName('dependent-comment-edit-form');
+
 var _loop3 = function _loop3(_i2) {
-  indCommentReply[_i2].addEventListener('click', function () {
-    independentCommentWriteForm[_i2].hidden = false;
+  dCommentEditBtnHide[_i2].addEventListener('click', function () {
+    alert(_i2);
+    dCommentEditForm[_i2].hidden = false;
   });
 };
 
-for (var _i2 = 0; _i2 < indCommentReply.length; _i2++) {
+for (var _i2 = 0; _i2 < dCommentEditBtnHide.length; _i2++) {
   _loop3(_i2);
-}
+} // $(".d-comment-edit").on( "click", function(event){
+//     // $(".dependent-comment-edit-form").show();
+//
+// });
+
 
 var _loop4 = function _loop4(_i3) {
-  dCommentReply[_i3].addEventListener('click', function () {
-    dependentCommentWriteForm[_i3].hidden = false;
+  commentsShowBtn[_i3].addEventListener('click', function () {
+    comments[_i3].hidden = false;
+    commentsHide[_i3].hidden = false;
+    commentsShowBtn[_i3].hidden = true;
   });
 };
 
-for (var _i3 = 0; _i3 < dCommentReply.length; _i3++) {
+for (var _i3 = 0; _i3 < commentsShowBtn.length; _i3++) {
   _loop4(_i3);
 }
 
 var _loop5 = function _loop5(_i4) {
-  hideIndCommentFormBtn[_i4].addEventListener('click', function () {
-    independentCommentWriteForm[_i4].hidden = true;
+  commentsHide[_i4].addEventListener('click', function () {
+    comments[_i4].hidden = true;
+    commentsHide[_i4].hidden = true;
+    commentsShowBtn[_i4].hidden = false;
   });
 };
 
-for (var _i4 = 0; _i4 < hideIndCommentFormBtn.length; _i4++) {
+for (var _i4 = 0; _i4 < commentsShowBtn.length; _i4++) {
   _loop5(_i4);
 }
 
 var _loop6 = function _loop6(_i5) {
-  hideDCommentFormBtn[_i5].addEventListener('click', function () {
-    dependentCommentWriteForm[_i5].hidden = true;
+  indCommentReply[_i5].addEventListener('click', function () {
+    independentCommentWriteForm[_i5].hidden = false;
   });
 };
 
-for (var _i5 = 0; _i5 < hideDCommentFormBtn.length; _i5++) {
+for (var _i5 = 0; _i5 < indCommentReply.length; _i5++) {
   _loop6(_i5);
+}
+
+var _loop7 = function _loop7(_i6) {
+  dCommentReply[_i6].addEventListener('click', function () {
+    alert(_i6);
+    dependentCommentWriteForm[_i6].hidden = false;
+  });
+};
+
+for (var _i6 = 0; _i6 < dCommentReply.length; _i6++) {
+  _loop7(_i6);
+}
+
+var _loop8 = function _loop8(_i7) {
+  hideIndCommentFormBtn[_i7].addEventListener('click', function () {
+    independentCommentWriteForm[_i7].hidden = true;
+  });
+};
+
+for (var _i7 = 0; _i7 < hideIndCommentFormBtn.length; _i7++) {
+  _loop8(_i7);
+}
+
+var _loop9 = function _loop9(_i8) {
+  hideDCommentFormBtn[_i8].addEventListener('click', function () {
+    dependentCommentWriteForm[_i8].hidden = true;
+  });
+};
+
+for (var _i8 = 0; _i8 < hideDCommentFormBtn.length; _i8++) {
+  _loop9(_i8);
+}
+
+var _loop10 = function _loop10(_i9) {
+  hideIndCommentEditFormBtn[_i9].addEventListener('click', function () {
+    indCommentEditForm[_i9].hidden = true;
+  });
+};
+
+for (var _i9 = 0; _i9 < hideIndCommentEditFormBtn.length; _i9++) {
+  _loop10(_i9);
+}
+
+var _loop11 = function _loop11(_i10) {
+  hideDCommentEditFormBtn[_i10].addEventListener('click', function () {
+    dCommentEditForm[_i10].hidden = true;
+  });
+};
+
+for (var _i10 = 0; _i10 < hideDCommentEditFormBtn.length; _i10++) {
+  _loop11(_i10);
 }
 /******/ })()
 ;

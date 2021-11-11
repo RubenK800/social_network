@@ -34,6 +34,8 @@ Route::group(['middleware' => ['auth']], function() {
     Route::post('posts',[PostsController::class,'store'])->name('posts.store');
     Route::post('likes',[LikesController::class,'store'])->name('likes.store');
     Route::post('comments',[CommentsController::class,'store'])->name('comments.store');
+    Route::delete('comments/{id}',[CommentsController::class, 'destroy'])->name('comments.destroy');
+    Route::put('comments/{id}',[CommentsController::class,'update'])->name('comments.update');
 });
 
 
