@@ -3,28 +3,19 @@ var __webpack_exports__ = {};
 /*!***********************************!*\
   !*** ./resources/js/user-wall.js ***!
   \***********************************/
-var submitPost = document.getElementById('submit-post');
-submitPost.addEventListener('click', function () {
-  if (document.getElementById("image").files.length === 0 && document.getElementById("text").value === '') {
+$('#submit-post').on('click', function () {
+  //https://stackoverflow.com/a/14772836
+  if ($("#image")[0].files.length === 0 && $("#text")[0].value === '') {
     alert("nothing to post");
     return false;
   }
 });
-var submitComment = document.getElementsByClassName('submit-comment');
-
-var _loop = function _loop(i) {
-  submitComment[i].onclick = function () {
-    if (document.getElementsByClassName("comment_image")[i].files.length === 0 && document.getElementsByClassName("comment-text")[i].value === '') {
-      alert("nothing to add");
-      return false;
-    }
-  };
-};
-
-for (var i = 0; i < submitComment.length; i++) {
-  _loop(i);
-}
-
+$('.submit-comment').on('click', function () {
+  if ($(".comment_image")[0].files.length === 0 && $(".comment-text")[0].value === '') {
+    alert("nothing to add");
+    return false;
+  }
+});
 $.ajaxSetup({
   headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -119,132 +110,49 @@ $(".d-comment-dislike").on("click", function (event) {
   });
   alert($(event.target).attr('data-d-comment-dislike'));
 });
-var commentsShowBtn = document.getElementsByClassName('show-comments');
-var commentsHide = document.getElementsByClassName('hide-comments');
-var comments = document.getElementsByClassName('comments-place');
-var indCommentReply = document.getElementsByClassName('ind-comment-reply');
-var independentCommentWriteForm = document.getElementsByClassName('to-independent-comment-write-form');
-var dCommentReply = document.getElementsByClassName('d-comment-reply');
-var dependentCommentWriteForm = document.getElementsByClassName('to-dependent-comment-write-form');
-var hideIndCommentFormBtn = document.getElementsByClassName('hide-ind-comment-form');
-var hideDCommentFormBtn = document.getElementsByClassName('hide-d-comment-form');
-var hideIndCommentEditFormBtn = document.getElementsByClassName('hide-ind-comment-edit-form');
-var hideDCommentEditFormBtn = document.getElementsByClassName('hide-d-comment-edit-form');
-var indCommentEditBtnHide = document.getElementsByClassName('ind-comment-edit');
-var indCommentEditForm = document.getElementsByClassName('independent-comment-edit-form');
+$('.ind-comment-edit').on('click', function () {
+  showElement('data-ind-edit', this);
+});
+$('.d-comment-edit').on('click', function () {
+  showElement('data-d-edit', this);
+}); //https://stackoverflow.com/a/33575340
 
-var _loop2 = function _loop2(_i) {
-  indCommentEditBtnHide[_i].addEventListener('click', function () {
-    alert(_i);
-    indCommentEditForm[_i].hidden = false;
-  });
-};
+$('.show-comments').on("click", function () {
+  showElement('data-show-c', this);
+  $(this).attr("hidden", true);
+});
+$('.hide-comments').on('click', function () {
+  hideElement('data-hide-c', this);
+  $('.show-comments').attr('hidden', false);
+  $(this).attr('hidden', true);
+});
+$('.ind-comment-reply').on('click', function () {
+  showElement('data-ind-reply', this);
+});
+$('.d-comment-reply').on('click', function () {
+  showElement('data-d-reply', this);
+});
+$('.hide-ind-comment-form').on('click', function () {
+  hideElement('data-ind-changed-mind', this);
+});
+$('.hide-d-comment-form').on('click', function () {
+  hideElement('data-d-changed-mind', this);
+});
+$('.hide-ind-comment-edit-form').on('click', function () {
+  hideElement('data-ind-edit-changed-mind', this);
+});
+$('.hide-d-comment-edit-form').on('click', function () {
+  hideElement('data-d-edit-changed-mind', this);
+});
 
-for (var _i = 0; _i < indCommentEditBtnHide.length; _i++) {
-  _loop2(_i);
+function showElement(attribute, element) {
+  var type = $(element).attr(attribute);
+  $('.' + type).attr("hidden", false);
 }
 
-var dCommentEditBtnHide = document.getElementsByClassName('d-comment-edit');
-var dCommentEditForm = document.getElementsByClassName('dependent-comment-edit-form');
-
-var _loop3 = function _loop3(_i2) {
-  dCommentEditBtnHide[_i2].addEventListener('click', function () {
-    alert(_i2);
-    dCommentEditForm[_i2].hidden = false;
-  });
-};
-
-for (var _i2 = 0; _i2 < dCommentEditBtnHide.length; _i2++) {
-  _loop3(_i2);
-} // $(".d-comment-edit").on( "click", function(event){
-//     // $(".dependent-comment-edit-form").show();
-//
-// });
-
-
-var _loop4 = function _loop4(_i3) {
-  commentsShowBtn[_i3].addEventListener('click', function () {
-    comments[_i3].hidden = false;
-    commentsHide[_i3].hidden = false;
-    commentsShowBtn[_i3].hidden = true;
-  });
-};
-
-for (var _i3 = 0; _i3 < commentsShowBtn.length; _i3++) {
-  _loop4(_i3);
-}
-
-var _loop5 = function _loop5(_i4) {
-  commentsHide[_i4].addEventListener('click', function () {
-    comments[_i4].hidden = true;
-    commentsHide[_i4].hidden = true;
-    commentsShowBtn[_i4].hidden = false;
-  });
-};
-
-for (var _i4 = 0; _i4 < commentsShowBtn.length; _i4++) {
-  _loop5(_i4);
-}
-
-var _loop6 = function _loop6(_i5) {
-  indCommentReply[_i5].addEventListener('click', function () {
-    independentCommentWriteForm[_i5].hidden = false;
-  });
-};
-
-for (var _i5 = 0; _i5 < indCommentReply.length; _i5++) {
-  _loop6(_i5);
-}
-
-var _loop7 = function _loop7(_i6) {
-  dCommentReply[_i6].addEventListener('click', function () {
-    alert(_i6);
-    dependentCommentWriteForm[_i6].hidden = false;
-  });
-};
-
-for (var _i6 = 0; _i6 < dCommentReply.length; _i6++) {
-  _loop7(_i6);
-}
-
-var _loop8 = function _loop8(_i7) {
-  hideIndCommentFormBtn[_i7].addEventListener('click', function () {
-    independentCommentWriteForm[_i7].hidden = true;
-  });
-};
-
-for (var _i7 = 0; _i7 < hideIndCommentFormBtn.length; _i7++) {
-  _loop8(_i7);
-}
-
-var _loop9 = function _loop9(_i8) {
-  hideDCommentFormBtn[_i8].addEventListener('click', function () {
-    dependentCommentWriteForm[_i8].hidden = true;
-  });
-};
-
-for (var _i8 = 0; _i8 < hideDCommentFormBtn.length; _i8++) {
-  _loop9(_i8);
-}
-
-var _loop10 = function _loop10(_i9) {
-  hideIndCommentEditFormBtn[_i9].addEventListener('click', function () {
-    indCommentEditForm[_i9].hidden = true;
-  });
-};
-
-for (var _i9 = 0; _i9 < hideIndCommentEditFormBtn.length; _i9++) {
-  _loop10(_i9);
-}
-
-var _loop11 = function _loop11(_i10) {
-  hideDCommentEditFormBtn[_i10].addEventListener('click', function () {
-    dCommentEditForm[_i10].hidden = true;
-  });
-};
-
-for (var _i10 = 0; _i10 < hideDCommentEditFormBtn.length; _i10++) {
-  _loop11(_i10);
+function hideElement(attribute, element) {
+  var type = $(element).attr(attribute);
+  $('.' + type).attr("hidden", true);
 }
 /******/ })()
 ;
