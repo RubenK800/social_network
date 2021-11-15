@@ -20,9 +20,8 @@
 <br>
 <div>
     @isset($posts)
-        <div hidden>{{$postNo=0}}</div>
-    @foreach($posts as $post)
-        <div hidden>{{++$postNo}}</div>
+        <div hidden>{{$userId =\Illuminate\Support\Facades\Auth::id()}}</div>
+    @foreach($posts as $postNo => $post)
         <div class="col-8 mx-auto" style="background-color: #cbd5e0; margin-bottom: 50px;">
             <hr>
             <div style="overflow: hidden; word-wrap: break-word">
@@ -43,9 +42,7 @@
             </div>
             <hr>
             <div class="comments-place show-c{{$postNo}} hide-c{{$postNo}}" hidden>
-                <div hidden>{{$indElementNo = 0}}</div>
-                <div hidden>{{$dElementNo = 0}}</div>
-                @foreach($post->comments as $independentcomment)
+                @foreach($post->comments as $indElementNo => $independentcomment)
                     @if($independentcomment['receiver_comment_id'] === 0)
                         <br>
                         <div class="bg-light">
@@ -58,7 +55,6 @@
                             </div>
                             <div>
                                 {{$independentcomment['comment_text']}}
-{{--                                $posts[0]->comments[20]->image['image_name']--}}
                             </div>
                             <div>
                                 @isset($independentcomment->image['image_name'])
@@ -69,9 +65,9 @@
                         <div>
                             <button class="comment-like-dislike" data-comment-like-dislike = "ind-c-like{{$independentcomment['id']}}">Like</button>
                             <button class="comment-like-dislike" data-comment-like-dislike ="ind-c-dislike{{$independentcomment['id']}}">Dislike</button>
-                            <button class="comment-function-show" data-comment-function-show="ind-reply{{++$indElementNo}}">Reply</button>
+                            <button class="comment-function-show" data-comment-function-show="ind-reply{{$indElementNo}}">Reply</button>
                             <div>
-                                @if($independentcomment->user['id']===\Illuminate\Support\Facades\Auth::id())
+                                @if($independentcomment->user['id'] === $userId)
                                     <button class="comment-edit" data-edit="ind-edit{{$indElementNo}}">Edit</button>
                                     <form action="{{route('comments.destroy',['id'=>$independentcomment['id']])}}" method="post">
                                         @method('DELETE')
@@ -96,7 +92,7 @@
                             <button class="comment-function-hide" data-comment-function-hide="ind-changed-mind{{$indElementNo}}">I changed my mind</button>
                         </div>
 
-                        @if($independentcomment->user['id'] === \Illuminate\Support\Facades\Auth::id())
+                        @if($independentcomment->user['id'] === $userId)
                             <div class="independent-comment-edit-form ind-edit{{$indElementNo}} ind-edit-changed-mind{{$indElementNo}}" hidden>
                                 <div>write your new comment here. It will replace the old one above</div>
                                 <form action="{{route('comments.update', ['id'=>$independentcomment['id']])}}" method='post' enctype='multipart/form-data'>
@@ -116,7 +112,7 @@
                     @endif
                             <div class="ms-4">
                                 @if(!is_null($independentcomment->dependentComments))
-                                    @foreach($independentcomment->dependentComments as $dependentComment)
+                                    @foreach($independentcomment->dependentComments as $dElementNo => $dependentComment)
                                         <br>
                                         <div class="bg-light">
                                         <div class="text-light bg-dark">
@@ -138,9 +134,9 @@
                                         <div>
                                             <button class="comment-like-dislike" data-comment-like-dislike = "d-c-like{{$dependentComment['id']}}">Like</button>
                                             <button class="comment-like-dislike" data-comment-like-dislike ="d-c-dislike{{$dependentComment['id']}}">Dislike</button>
-                                            <button class="comment-function-show" data-comment-function-show="d-reply{{++$dElementNo}}">Reply</button>
+                                            <button class="comment-function-show" data-comment-function-show="d-reply{{$dElementNo}}">Reply</button>
                                             <div>
-                                                @if($dependentComment->user['id'] === \Illuminate\Support\Facades\Auth::id())
+                                                @if($dependentComment->user['id'] === $userId)
                                                     <button class="comment-edit" data-edit="d-edit{{$dElementNo}}">Edit</button>
                                                     <form action="{{route('comments.destroy', ['id'=>$dependentComment['id']])}}" method="post">
                                                         @method('DELETE')
@@ -166,7 +162,7 @@
                                             <button class="comment-function-hide" data-comment-function-hide="d-changed-mind{{$dElementNo}}">I changed my mind</button>
                                         </div>
 
-                                        @if($dependentComment->user['id'] === \Illuminate\Support\Facades\Auth::id())
+                                        @if($dependentComment->user['id'] === $userId)
                                         <div class="dependent-comment-edit-form d-edit{{$dElementNo}} d-edit-changed-mind{{$dElementNo}}" hidden>
                                             <div>write your new comment here. It will replace the old one above</div>
                                             <form action="{{route('comments.update', ['id'=>$dependentComment['id']])}}" method='post' enctype='multipart/form-data'>
@@ -206,13 +202,14 @@
                 Likes count = {{$post['likes_count']}}
             </div>
             <div>
-                Comments count = {{count($post->comments)}}{{--{{$post['comments_count']}}--}}
+                Comments count = {{count($post->comments)}}
             </div>
             <div>
                 Reposts count = {{$post['reposts_count']}}
             </div>
             <hr>
         </div>
+
     @endforeach
     @endisset
 </div>

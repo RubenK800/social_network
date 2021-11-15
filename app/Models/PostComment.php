@@ -27,7 +27,7 @@ class PostComment extends Model
         return $this->hasMany(PostComment::class, 'receiver_comment_id');
     }
 
-    public function image(){
+    public function image(): HasOne{
         return $this->hasOne(CommentImage::class, 'comment_id');
     }
 }

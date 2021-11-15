@@ -13,15 +13,9 @@ class UsersWallsController
 {
     public function index()
     {
-        $posts = Auth::user()->posts()->with('images','comments.user','comments.dependentComments', 'comments.image')->get();
+        $posts = Auth::user()->posts()->with('images','comments.user', 'comments.dependentComments', 'comments.image',
+            'comments.dependentComments.user', 'comments.dependentComments.image')->get();
         //ddd($posts);
-        //check and correct the comments count if there is wrong value
-        foreach ($posts as $post) {
-            $commentsCount = PostComment::where('post_id',$post['id'])->count();
-            if ($commentsCount > 0) {
-                Post::where('id', $post['id'])->update(['comments_count' => $commentsCount]);
-            }
-        }
 
         //dd($posts[0]->comments[20]->image);
         return view('user-profile.user-wall',['posts' => $posts]);
