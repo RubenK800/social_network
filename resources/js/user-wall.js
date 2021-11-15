@@ -7,7 +7,11 @@ $('#submit-post').on('click', function () {
 });
 
 $('.submit-comment').on('click', function () {
-    if($(".comment_image")[0].files.length === 0 && $(".comment-text")[0].value === ''){
+    let type = $(this).attr('data-comment-value');
+    //$('.' + type).attr("hidden", false);
+    //alert($(".comment_image."+type)[0].files);
+    //https://stackoverflow.com/questions/1041344/how-can-i-select-an-element-with-multiple-classes-in-jquery
+    if($(".comment_image."+type)[0].files.length === 0 && $(".comment-text."+type)[0].value === ''){
         alert("nothing to add");
         return false;
     }
@@ -35,120 +39,76 @@ $(".likeIt").on( "click", function(event){
     alert($(event.target).attr('data-post-like'));
 });
 
-$(".ind-comment-like").on( "click", function(event){
-    let commentId = $(event.target).attr('data-ind-comment-like');
-    $.ajax({
-        url:'likes',
-        data:{'comment_id':commentId, 'type':'like'},
-        type:'post',
-        success:  function (response) {
-            console.log(response);
-        },
-        error: function(x,xs,xt){
-            console.log(x);
-        }
-    });
-    alert($(event.target).attr('data-ind-comment-like'));
+$(".comment-like-dislike").on( "click", function(event){
+    let targetDataValue = $(event.target).attr('data-comment-like-dislike');
+    if (targetDataValue.includes('ind-c')){
+        getCommentIdFromData(targetDataValue,'ind-c');
+    } else if (targetDataValue.includes('d-c')){
+        getCommentIdFromData(targetDataValue,'d-c');
+    }
 });
 
-$(".d-comment-like").on( "click", function(event){
-    let commentId = $(event.target).attr('data-d-comment-like');
-    $.ajax({
-        url:'likes',
-        data:{'comment_id':commentId, 'type':'like'},
-        type:'post',
-        success:  function (response) {
-            console.log(response);
-        },
-        error: function(x,xs,xt){
-            console.log(x);
-        }
-    });
-    alert($(event.target).attr('data-d-comment-like'));
-});
-
-$(".ind-comment-dislike").on( "click", function(event){
-    let commentId = $(event.target).attr('data-ind-comment-dislike');
-    $.ajax({
-        url:'likes',
-        data:{'comment_id':commentId, 'type':'dislike'},
-        type:'post',
-        success:  function (response) {
-            console.log(response);
-        },
-        error: function(x,xs,xt){
-            console.log(x);
-        }
-    });
-    alert($(event.target).attr('data-ind-comment-dislike'));
-});
-
-$(".d-comment-dislike").on( "click", function(event){
-    let commentId = $(event.target).attr('data-d-comment-dislike');
-    $.ajax({
-        url:'likes',
-        data:{'comment_id':commentId, 'type':'dislike'},
-        type:'post',
-        success:  function (response) {
-            console.log(response);
-        },
-        error: function(x,xs,xt){
-            console.log(x);
-        }
-    });
-    alert($(event.target).attr('data-d-comment-dislike'));
-});
-
-$('.ind-comment-edit').on('click', function () {
-    showElement('data-ind-edit',this);
-});
-
-$('.d-comment-edit').on('click', function () {
-    showElement('data-d-edit',this);
+$('.comment-edit').on('click', function () {
+    let targetDataValue = $(event.target).attr('data-edit');
+    if (targetDataValue.includes('ind-edit')) {
+        showOrHideElement('show','data-edit',this);
+    } else if (targetDataValue.includes('d-edit')) {
+        showOrHideElement('show','data-edit',this);
+    }
 });
 
 //https://stackoverflow.com/a/33575340
 $('.show-comments').on("click", function(){
-    showElement('data-show-c',this);
+    showOrHideElement('show','data-show-c', this);
     $(this).attr("hidden", true);
 });
 
 $('.hide-comments').on('click', function(){
-    hideElement('data-hide-c',this);
+    showOrHideElement('hide','data-hide-c',this);
     $('.show-comments').attr('hidden', false);
     $(this).attr('hidden', true);
 });
 
-$('.ind-comment-reply').on('click', function () {
-    showElement('data-ind-reply',this);
+$('.comment-function-show').on('click', function () {
+    showOrHideElement('show','data-comment-function-show',this);
 });
 
-$('.d-comment-reply').on('click', function () {
-    showElement('data-d-reply', this);
+$('.comment-function-hide').on('click', function () {
+    showOrHideElement('hide','data-comment-function-hide', this);
 });
 
-$('.hide-ind-comment-form').on('click', function () {
-    hideElement('data-ind-changed-mind', this);
-});
-
-$('.hide-d-comment-form').on('click', function () {
-    hideElement('data-d-changed-mind',this);
-});
-
-$('.hide-ind-comment-edit-form').on('click', function () {
-    hideElement('data-ind-edit-changed-mind',this);
-});
-
-$('.hide-d-comment-edit-form').on('click', function () {
-    hideElement('data-d-edit-changed-mind',this);
-});
-
-function showElement(attribute, element){
+function showOrHideElement(actionName,attribute, element){
+    if (actionName === 'show') {
         let type = $(element).attr(attribute);
-        $('.'+type).attr("hidden", false);
-}
-
-function hideElement(attribute, element){
+        $('.' + type).attr("hidden", false);
+    } else if (actionName === 'hide'){
         let type = $(element).attr(attribute);
         $('.'+type).attr("hidden", true);
+    }
+}
+
+function getCommentIdFromData(targetDataValue, commentType){
+    let commentId = null;
+    let type = null;
+    if (targetDataValue.includes('dislike')){
+        type = 'dislike';
+        commentId =  targetDataValue.replace(commentType+'-dislike','');
+        alert(type);
+    } else if (targetDataValue.includes('like')){
+        type = 'like';
+        commentId =  targetDataValue.replace(commentType+'-like','');
+        alert(type);
+    }
+    $.ajax({
+        url:'likes',
+        data:{'comment_id':commentId, 'type':type},
+        type:'post',
+        success:  function (response) {
+            console.log(response);
+        },
+        error: function(x,xs,xt){
+            console.log(x);
+        }
+    });
+    alert(commentId);
 }

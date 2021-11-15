@@ -67,12 +67,12 @@
                             </div>
                         </div>
                         <div>
-                            <button class="ind-comment-like" data-ind-comment-like = "{{$independentcomment['id']}}">Like</button>
-                            <button class="ind-comment-dislike" data-ind-comment-dislike ="{{$independentcomment['id']}}">Dislike</button>
-                            <button class="ind-comment-reply" data-ind-reply="ind-reply{{++$indElementNo}}">Reply</button>
+                            <button class="comment-like-dislike" data-comment-like-dislike = "ind-c-like{{$independentcomment['id']}}">Like</button>
+                            <button class="comment-like-dislike" data-comment-like-dislike ="ind-c-dislike{{$independentcomment['id']}}">Dislike</button>
+                            <button class="comment-function-show" data-comment-function-show="ind-reply{{++$indElementNo}}">Reply</button>
                             <div>
                                 @if($independentcomment->user['id']===\Illuminate\Support\Facades\Auth::id())
-                                    <button class="ind-comment-edit" data-ind-edit="ind-edit{{$indElementNo}}">Edit</button>
+                                    <button class="comment-edit" data-edit="ind-edit{{$indElementNo}}">Edit</button>
                                     <form action="{{route('comments.destroy',['id'=>$independentcomment['id']])}}" method="post">
                                         @method('DELETE')
                                         @csrf
@@ -86,31 +86,31 @@
                                             'receiverCommentId' => $independentcomment['id']])}}" method='post' enctype="multipart/form-data">
                                 @csrf
                                 <label>
-                                    <input type="text" name="comment-text" class="comment-text">
+                                    <input type="text" name="comment-text" class="comment-text reply-ind-c-value{{$indElementNo}}" value="{{$independentcomment->user['name']}}, ">
                                 </label>
                                 <label style="border: solid #1a202c 1px">Add Image
-                                    <input type="file" name="comment_image" class="comment_image" hidden>
+                                    <input type="file" name="comment_image" class="comment_image reply-ind-c-value{{$indElementNo}}" hidden>
                                 </label>
-                                <input type="submit" class="submit-comment" value="Send comment">
+                                <input type="submit" class="submit-comment" data-comment-value="reply-ind-c-value{{$indElementNo}}" value="Send comment">
                             </form>
-                            <button class="hide-ind-comment-form" data-ind-changed-mind="ind-changed-mind{{$indElementNo}}">I changed my mind</button>
+                            <button class="comment-function-hide" data-comment-function-hide="ind-changed-mind{{$indElementNo}}">I changed my mind</button>
                         </div>
 
                         @if($independentcomment->user['id'] === \Illuminate\Support\Facades\Auth::id())
                             <div class="independent-comment-edit-form ind-edit{{$indElementNo}} ind-edit-changed-mind{{$indElementNo}}" hidden>
                                 <div>write your new comment here. It will replace the old one above</div>
-                                <form action="{{route('comments.update', ['id'=>$independentcomment['id']])}}" method='post' enctype="multipart/form-data">
+                                <form action="{{route('comments.update', ['id'=>$independentcomment['id']])}}" method='post' enctype='multipart/form-data'>
                                     @csrf
                                     @method('PUT')
                                     <label>
-                                        <input type="text" name="comment-text" class="comment-text" value="{{$independentcomment['comment_text']}}">
+                                        <input type="text" name="comment-text" class="comment-text edit-ind-c-value{{$indElementNo}}" value="{{$independentcomment['comment_text']}}">
                                     </label>
                                     <label style="border: solid #1a202c 1px">Add Image
-                                        <input type="file" name="comment_image" class="comment_image" hidden>
+                                        <input type="file" name="comment_image" class="comment_image edit-ind-c-value{{$indElementNo}}" hidden>
                                     </label>
-                                    <input type="submit" class="submit-comment" value="Send comment">
+                                    <input type="submit" class="submit-comment" data-comment-value="edit-ind-c-value{{$indElementNo}}" value="Send comment">
                                 </form>
-                                <button class="hide-ind-comment-edit-form" data-ind-edit-changed-mind = "ind-edit-changed-mind{{$indElementNo}}">I changed my mind</button>
+                                <button class="comment-function-hide" data-comment-function-hide = "ind-edit-changed-mind{{$indElementNo}}">I changed my mind</button>
                             </div>
                         @endif
                     @endif
@@ -136,12 +136,12 @@
                                             </div>
                                         </div>
                                         <div>
-                                            <button class="d-comment-like" data-d-comment-like = "{{$dependentComment['id']}}">Like</button>
-                                            <button class="d-comment-dislike" data-d-comment-dislike ="{{$dependentComment['id']}}">Dislike</button>
-                                            <button class="d-comment-reply" data-d-reply="d-reply{{++$dElementNo}}">Reply</button>
+                                            <button class="comment-like-dislike" data-comment-like-dislike = "d-c-like{{$dependentComment['id']}}">Like</button>
+                                            <button class="comment-like-dislike" data-comment-like-dislike ="d-c-dislike{{$dependentComment['id']}}">Dislike</button>
+                                            <button class="comment-function-show" data-comment-function-show="d-reply{{++$dElementNo}}">Reply</button>
                                             <div>
                                                 @if($dependentComment->user['id'] === \Illuminate\Support\Facades\Auth::id())
-                                                    <button class="d-comment-edit" data-d-edit="d-edit{{$dElementNo}}">Edit</button>
+                                                    <button class="comment-edit" data-edit="d-edit{{$dElementNo}}">Edit</button>
                                                     <form action="{{route('comments.destroy', ['id'=>$dependentComment['id']])}}" method="post">
                                                         @method('DELETE')
                                                         @csrf
@@ -156,31 +156,31 @@
                                             'receiverCommentId' => $independentcomment['id']])}}" method='post' enctype="multipart/form-data">
                                                 @csrf
                                                 <label>
-                                                    <input type="text" name="comment-text" class="comment-text" value="{{$dependentComment->user['name']}}, ">
+                                                    <input type="text" name="comment-text" class="comment-text d-changed-mind{{$dElementNo}}" value="{{$dependentComment->user['name']}}, ">
                                                 </label>
                                                 <label style="border: solid #1a202c 1px">Add Image
-                                                    <input type="file" name="comment_image" class="comment_image" hidden>
+                                                    <input type="file" name="comment_image" class="comment_image d-changed-mind{{$dElementNo}}" hidden>
                                                 </label>
-                                                <input type="submit" class="submit-comment" value="Send comment">
+                                                <input type="submit" class="submit-comment" data-comment-value = "d-changed-mind{{$dElementNo}}" value="Send comment">
                                             </form>
-                                            <button class="hide-d-comment-form" data-d-changed-mind="d-changed-mind{{$dElementNo}}">I changed my mind</button>
+                                            <button class="comment-function-hide" data-comment-function-hide="d-changed-mind{{$dElementNo}}">I changed my mind</button>
                                         </div>
 
                                         @if($dependentComment->user['id'] === \Illuminate\Support\Facades\Auth::id())
                                         <div class="dependent-comment-edit-form d-edit{{$dElementNo}} d-edit-changed-mind{{$dElementNo}}" hidden>
                                             <div>write your new comment here. It will replace the old one above</div>
-                                            <form action="{{route('comments.update', ['id'=>$dependentComment['id']])}}" method='post' enctype="multipart/form-data">
+                                            <form action="{{route('comments.update', ['id'=>$dependentComment['id']])}}" method='post' enctype='multipart/form-data'>
                                                 @csrf
                                                 @method('PUT')
                                                 <label>
-                                                    <input type="text" name="comment-text" class="comment-text" value="{{$dependentComment['comment_text']}}">
+                                                    <input type="text" name="comment-text" class="comment-text edit-d-c-value{{$dElementNo}}" value="{{$dependentComment['comment_text']}}">
                                                 </label>
                                                 <label style="border: solid #1a202c 1px">Add Image
-                                                    <input type="file" name="comment_image" class="comment_image" hidden>
+                                                    <input type="file" name="comment_image" class="comment_image edit-d-c-value{{$dElementNo}}" hidden>
                                                 </label>
-                                                <input type="submit" class="submit-comment" value="Send comment">
+                                                <input type="submit" class="submit-comment" data-comment-value="edit-d-c-value{{$dElementNo}}" value="Send comment">
                                             </form>
-                                            <button class="hide-d-comment-edit-form" data-d-edit-changed-mind = "d-edit-changed-mind{{$dElementNo}}">I changed my mind</button>
+                                            <button class="comment-function-hide" data-comment-function-hide = "d-edit-changed-mind{{$dElementNo}}">I changed my mind</button>
                                         </div>
                                         @endif
                                     @endforeach
@@ -193,12 +193,12 @@
                 <form action="{{route('comments.store', ['postId' => $post['id'], 'receiverCommentId' => 0])}}" method='post' enctype="multipart/form-data">
                     @csrf
                     <label>
-                        <input type="text" name="comment-text" class="comment-text">
+                        <input type="text" name="comment-text" class="comment-text c-value{{$postNo}}">
                     </label>
                     <label style="border: solid #1a202c 1px">Add Image
-                        <input type="file" name="comment_image" class="comment_image" hidden>
+                        <input type="file" name="comment_image" class="comment_image c-value{{$postNo}}" hidden>
                     </label>
-                    <input type="submit" class="submit-comment" value="Send comment">
+                    <input type="submit" class="submit-comment" data-comment-value="c-value{{$postNo}}" value="Send comment">
                 </form>
             </div>
             <hr>
