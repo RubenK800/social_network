@@ -9,6 +9,7 @@ use App\Models\PostCommentDislike;
 use App\Models\PostCommentLike;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Redirect;
 
 class CommentsController extends Controller
@@ -37,6 +38,11 @@ class CommentsController extends Controller
         $image = $request->file('comment_image');
         $commentText = $request->get('comment-text');
 
+        $comment = PostComment::where('id',$id)->get()->first();
+        if (! Gate::allows('update-comment', $comment)) {
+            abort(403);
+        }
+
         if ($image) {
             $this->updateComment($id,$commentText);
             $image->storeAs('comment_pics', $image->getClientOriginalName());
@@ -51,6 +57,10 @@ class CommentsController extends Controller
     }
 
     public function destroy($id){
+        $comment = PostComment::where('id',$id)->get()->first();
+        if (! Gate::allows('delete-comment', $comment)) {
+            abort(403);
+        }
         PostComment::where('id',$id)->where('writer_user_id',Auth::id())->delete();
         PostCommentLike::where('comment_id', $id)->where('user_id',Auth::id())->delete();
         PostCommentDisLike::where('comment_id', $id)->where('user_id',Auth::id())->delete();

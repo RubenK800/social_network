@@ -20,7 +20,7 @@
 <br>
 <div>
     @isset($posts)
-        <div hidden>{{$userId =\Illuminate\Support\Facades\Auth::id()}}</div>
+        <div hidden>{{$userId = Auth::id()}}</div>
     @foreach($posts as $postNo => $post)
         <div class="col-8 mx-auto" style="background-color: #cbd5e0; margin-bottom: 50px;">
             <hr>
@@ -162,7 +162,8 @@
                                             <button class="comment-function-hide" data-comment-function-hide="d-changed-mind{{$dElementNo}}">I changed my mind</button>
                                         </div>
 
-                                        @if($dependentComment->user['id'] === $userId)
+{{--                                            даже если кнопка Edit видна для не авторизованного пользователя, то нажатие на него не активирует окно comment edit--}}
+{{--                                        @if($dependentComment->user['id'] === $userId)--}}
                                         <div class="dependent-comment-edit-form d-edit{{$dElementNo}} d-edit-changed-mind{{$dElementNo}}" hidden>
                                             <div>write your new comment here. It will replace the old one above</div>
                                             <form action="{{route('comments.update', ['id'=>$dependentComment['id']])}}" method='post' enctype='multipart/form-data'>
@@ -178,7 +179,7 @@
                                             </form>
                                             <button class="comment-function-hide" data-comment-function-hide = "d-edit-changed-mind{{$dElementNo}}">I changed my mind</button>
                                         </div>
-                                        @endif
+{{--                                        @endif--}}
                                     @endforeach
                                 @endif
                             </div>
