@@ -57,6 +57,15 @@ $('.comment-edit').on('click', function () {
     }
 });
 
+$('.post-edit').on('click',function () {
+    //let targetDataValue = $(event.target).attr('data-edit');
+    showOrHideElement('show','data-edit',this);
+})
+
+$('.post-edit-form-hide').on('click',function () {
+    showOrHideElement('hide','data-post-edit-form-hide',this);
+})
+
 //https://stackoverflow.com/a/33575340
 $('.show-comments').on("click", function(){
     showOrHideElement('show','data-show-c', this);

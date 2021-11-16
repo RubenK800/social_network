@@ -41,6 +41,35 @@
                 <button class="likeIt" data-post-like="{{$post['id']}}">Like it</button>
                 <button class="show-comments hide-c{{$postNo}}" data-show-c = "show-c{{$postNo}}">Show Comments</button>
                 <button class="hide-comments show-c{{$postNo}}" data-hide-c = "hide-c{{$postNo}}" hidden>Hide Comments</button>
+                <button class="post-edit" data-edit="post-edit{{$post['id']}}">Edit</button>
+                <form action="{{route('posts.destroy',['id'=>$post['id']])}}" method="post">
+                    @method('DELETE')
+                    @csrf
+                    <input type="submit" value="Delete">
+                </form>
+            </div>
+            <hr>
+            <div class="post-edit-form post-edit{{$post['id']}} post-edit-changed-mind{{$post['id']}}" hidden>
+                <form action="{{route('posts.update', ['id' => $post['id']])}}" method="post" enctype = "multipart/form-data">
+                    @csrf
+                    @method('PUT')
+                    <div class="col-8 mx-auto">
+                        <label>
+                            {{--            <input type="text" name="post-body" id="text">--}}
+                            <textarea class="form-control" name="post-body" id="text" rows="5" style="width: 800px"></textarea>
+                        </label>
+                    </div>
+                    <div class="col-8 mx-auto">
+                        <label style="border: solid #1a202c 1px">Add image
+                            <input type="file" name="img[]" multiple hidden>
+                        </label>
+                    </div>
+                    <br>
+                    <div class="col-8 mx-auto">
+                        <input type="submit" name="submit" value="Save changes" id = "submit-post">
+                    </div>
+                </form>
+                <button class="post-edit-form-hide" data-post-edit-form-hide = "post-edit-changed-mind{{$post['id']}}">I changed my mind</button>
             </div>
             <hr>
             <div class="comments-place show-c{{$postNo}} hide-c{{$postNo}}" hidden>
@@ -138,14 +167,14 @@
                                             <button class="comment-like-dislike" data-comment-like-dislike ="d-c-dislike{{$dependentComment['id']}}">Dislike</button>
                                             <button class="comment-function-show" data-comment-function-show="d-reply{{$dElementNo}}">Reply</button>
                                             <div>
-{{--                                                @if($dependentComment->user['id'] === $userId)--}}
+                                                @if($dependentComment->user['id'] === $userId)
                                                     <button class="comment-edit" data-edit="d-edit{{$dElementNo}}">Edit</button>
                                                     <form action="{{route('comments.destroy', ['id'=>$dependentComment['id']])}}" method="post">
                                                         @method('DELETE')
                                                         @csrf
                                                         <input type="submit" value="Delete">
                                                     </form>
-{{--                                                @endif--}}
+                                                @endif
                                             </div>
                                         </div>
 
@@ -188,6 +217,8 @@
                 @endforeach
             </div>
             <hr>
+{{--            <div>Delete this post</div>--}}
+{{--            <hr>--}}
             <div>
                 <form action="{{route('comments.store', ['postId' => $post['id'], 'receiverCommentId' => 0])}}" method='post' enctype="multipart/form-data">
                     @csrf

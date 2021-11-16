@@ -15,8 +15,8 @@ class LikesController extends Controller
 {
     public function store(Request $request)
     {
-//        $data = $request->post_id; //тоже работает
-        if ($request->has('post_id') && $request->has('type')) {
+        //$data = $request->post_id; //тоже работает
+        if ($request->has('post_id') && !$request->has('type')) {
             $data = $request->input('post_id', 0);
                 if (PostLike::where('user_id', Auth::id())->where('post_id', $data)->count() === 0) {
                     Post::where('id', $data)->increment('likes_count', 1);
@@ -58,6 +58,6 @@ class LikesController extends Controller
             }
         }
 
-        return response($data); //вместо echo $data
+        return "ok";//response($data); //вместо echo $data
     }
 }
