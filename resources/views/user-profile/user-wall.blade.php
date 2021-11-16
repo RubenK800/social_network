@@ -20,7 +20,9 @@
 <br>
 <div>
     @isset($posts)
-        <div hidden>{{$userId = Auth::id()}}</div>
+        @php
+            $userId = Auth::id();
+        @endphp
     @foreach($posts as $postNo => $post)
         <div class="col-8 mx-auto" style="background-color: #cbd5e0; margin-bottom: 50px;">
             <hr>
@@ -136,14 +138,14 @@
                                             <button class="comment-like-dislike" data-comment-like-dislike ="d-c-dislike{{$dependentComment['id']}}">Dislike</button>
                                             <button class="comment-function-show" data-comment-function-show="d-reply{{$dElementNo}}">Reply</button>
                                             <div>
-                                                @if($dependentComment->user['id'] === $userId)
+{{--                                                @if($dependentComment->user['id'] === $userId)--}}
                                                     <button class="comment-edit" data-edit="d-edit{{$dElementNo}}">Edit</button>
                                                     <form action="{{route('comments.destroy', ['id'=>$dependentComment['id']])}}" method="post">
                                                         @method('DELETE')
                                                         @csrf
                                                         <input type="submit" value="Delete">
                                                     </form>
-                                                @endif
+{{--                                                @endif--}}
                                             </div>
                                         </div>
 

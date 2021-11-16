@@ -38,7 +38,7 @@ class CommentsController extends Controller
         $image = $request->file('comment_image');
         $commentText = $request->get('comment-text');
 
-        $comment = PostComment::where('id',$id)->get()->first();
+        $comment = PostComment::where('id',$id)->first();
         if (! Gate::allows('update-comment', $comment)) {
             abort(403);
         }
@@ -57,7 +57,7 @@ class CommentsController extends Controller
     }
 
     public function destroy($id){
-        $comment = PostComment::where('id',$id)->get()->first();
+        $comment = PostComment::where('id',$id)->first();
         if (! Gate::allows('delete-comment', $comment)) {
             abort(403);
         }
