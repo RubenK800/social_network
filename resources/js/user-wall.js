@@ -121,3 +121,22 @@ function getCommentIdFromData(targetDataValue, commentType){
     });
     alert(commentId);
 }
+
+$('.delete-post-image').on('click',function () {
+    let postId = $(event.target).attr('data-post');
+    let imageName = $(event.target).attr('data-image-name');
+    $postId = postId;
+    $.ajax({
+        url: 'posts/'+postId+'/edit',
+        data: {'id':postId,'image_name':imageName},
+        type: 'GET',
+        // contentType:'application/json',  // <---add this
+        // dataType: 'text',                // <---update this
+        success: function (response) {
+            console.log(response);
+        },
+        error: function (response) {
+            console.log(response);
+        }
+    });
+});

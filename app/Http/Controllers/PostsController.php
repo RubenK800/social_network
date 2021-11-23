@@ -39,6 +39,14 @@ class PostsController extends Controller
         Redirect::route('user-wall.index')->with(['posts'=>$posts]);
     }
 
+    public function edit($id, Request $request){
+        if ($request->has('image_name')){
+            $imageToRemove = $request->get('image_name');
+            print_r('id = '.$id.'image name = '. $imageToRemove);
+            PostImage::where('post_id', $id)->where('image_name',$imageToRemove)->delete();
+        }
+    }
+
     public function update($id, Request $request){
         $files = $request->file('img');
         $postBody = $request->get('post-body');

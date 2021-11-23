@@ -95,9 +95,17 @@ class CommentsController extends Controller
     }
 
     private function saveCommentImage(int $commentId, string $imageName):void {
-        $commentImage = new CommentImage();
-        $commentImage->comment_id = $commentId;
-        $commentImage->image_name = $imageName;
-        $commentImage->save();
+//        $commentImage = CommentImage::where('comment_id', $commentId)->first();
+//        if(!$commentImage){
+//            $commentImage = new CommentImage();
+//            $commentImage->comment_id = $commentId;
+//        }
+//        $commentImage->image_name = $imageName;
+//        $commentImage->save();
+
+        CommentImage::updateOrCreate(
+            ['comment_id' => $commentId],
+            ['image_name' => $imageName]
+        );
     }
 }
