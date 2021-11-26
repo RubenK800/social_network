@@ -36,6 +36,7 @@
         "urix": "^0.1.0",
         "vue-loader": "^15.9.8",
         "vue-router": "^3.5.3",
-        "vue-search-select": "^2.9.5"
+        "vue-search-select": "^2.9.5",
+        "vuex": "^3.6.2"
     }
 }

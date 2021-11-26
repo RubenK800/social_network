@@ -267,10 +267,5 @@
 @endsection
 
 @section('js')
-<script>
-    import PostFunctions from "../../js/components/PostFunctions";
-    export default {
-        components: {PostFunctions}
-    }
-</script>
+
 @endsection

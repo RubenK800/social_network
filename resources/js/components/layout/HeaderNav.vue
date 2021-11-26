@@ -16,21 +16,41 @@
                             <router-link to="user-profile" class="nav-link">Profile</router-link>
                             <!--                        <router-view></router-view>-->
                         </li>
+                        <li class="nav-item">
+                            <div @click.prevent v-on:click="logout" class="nav-link">Logout</div>
+                        </li>
                     </ul>
-                    <form action="/logout" method="post" class="navbar-nav my-2 my-lg-0">
-                        @csrf
-                        <input type="submit" value="logout" class="nav-item">
-                    </form>
+<!--                    <form action="/logout" method="post" class="navbar-nav my-2 my-lg-0">-->
+<!--                        @csrf-->
+<!--                        <input type="submit" value="logout" class="nav-item">-->
+<!--                    </form>-->
+<!--                    <a href="#" @click.prevent="logout" class="nav-item">logout</a>-->
+<!--                    <button v-on:click="logout" class="nav-item">logout</button>-->
                 </div>
             </div>
         </nav>
-        <router-view></router-view>
     </div>
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
+
     export default {
-        name: "HeaderNav"
+        name: "HeaderNav",
+        data: () => ({
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        }),
+        computed:{
+            ...mapGetters('comments', ['comment']),
+        },
+        mounted() {
+            console.log(this.comment);
+        },
+        methods:{
+             logout(){
+                 this.$store.dispatch("users/logout");
+             },
+        },
     }
 </script>
 

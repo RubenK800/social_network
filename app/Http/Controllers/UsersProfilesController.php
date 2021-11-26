@@ -13,6 +13,6 @@ class UsersProfilesController extends Controller
         $userId = Auth::id();
         $avatar = UsersAvatar::where('user_id',$userId)->first();
         //dd($avatar);
-        return view('user-profile.profile',['avatar'=>$avatar]);
+        return http_response_code(201);//view('user-profile.profile',['avatar'=>$avatar]);
     }
 }

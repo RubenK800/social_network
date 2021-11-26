@@ -7,11 +7,10 @@
     <link rel="stylesheet" href={{ asset('css/bootstrap.css') }}>
 </head>
 <body>
-<div id="app">
-    <header-nav></header-nav>
-</div>
+
+<div id="app"></div>
 
 <script src="{{mix('js/app.js')}}"></script>
-<script src="{{ asset('js/bootstrap.js') }}"></script>
+<script src="{{asset('js/bootstrap.js') }}"></script>
 </body>
 </html>

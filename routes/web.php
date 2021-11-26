@@ -24,21 +24,21 @@ Route::get('/', function () {
     return view('layouts.vue');//view('auth.login');
 });
 
-//Route::group(['middleware' => ['auth']], function() {
-//    Route::get('users', [UsersController::class, 'index']);
-//    Route::get('user-profile', [UsersProfilesController::class,'index'])->name('user.profile.index');
-//    Route::get('user-profile/{id}', [UsersAvatarsController::class,'show'])->name('user.profile.show');
-//    Route::post('avatar',[UsersAvatarsController::class,'store'])->name('avatar.store');
-//    Route::get('avatar/{userAvatar}',[UsersAvatarsController::class,'show'])->name('show-avatar');
-//    Route::get('user-wall',[UsersWallsController::class,'index'])->name('user-wall.index');
-//    Route::post('posts',[PostsController::class,'store'])->name('posts.store');
-//    Route::delete('posts/{id}',[PostsController::class, 'destroy'])->name('posts.destroy');
-//    Route::put('posts/{id}',[PostsController::class,'update'])->name('posts.update');
-//    Route::get('posts/{id}/edit',[PostsController::class,'edit'])->name('posts.edit');
-//    Route::post('likes',[LikesController::class,'store'])->name('likes.store');
-//    Route::post('comments',[CommentsController::class,'store'])->name('comments.store');
-//    Route::delete('comments/{id}',[CommentsController::class, 'destroy'])->name('comments.destroy');
-//    Route::put('comments/{id}',[CommentsController::class,'update'])->name('comments.update');
-//});
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('users', [UsersController::class, 'index']);
+    Route::get('user-profile', [UsersProfilesController::class,'index'])->name('user.profile.index');
+    Route::get('user-profile/{id}', [UsersAvatarsController::class,'show'])->name('user.profile.show');
+    Route::post('avatar',[UsersAvatarsController::class,'store'])->name('avatar.store');
+    Route::get('avatar/{userAvatar}',[UsersAvatarsController::class,'show'])->name('show-avatar');
+    Route::get('user-wall',[UsersWallsController::class,'index'])->name('user-wall.index');
+    Route::post('posts',[PostsController::class,'store'])->name('posts.store');
+    Route::delete('posts/{id}',[PostsController::class, 'destroy'])->name('posts.destroy');
+    Route::put('posts/{id}',[PostsController::class,'update'])->name('posts.update');
+    Route::get('posts/{id}/edit',[PostsController::class,'edit'])->name('posts.edit');
+    Route::post('likes',[LikesController::class,'store'])->name('likes.store');
+    Route::post('comments',[CommentsController::class,'store'])->name('comments.store');
+    Route::delete('comments/{id}',[CommentsController::class, 'destroy'])->name('comments.destroy');
+    Route::put('comments/{id}',[CommentsController::class,'update'])->name('comments.update');
+});
 
 
