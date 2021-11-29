@@ -7,13 +7,15 @@ import Vue from "vue";
 
 Vue.use(VueRouter);
 const routes = [
-    { path: '/login', component: Login},
-    { path: '/register', component: Register},
-    { path: '/user-profile', component: Profile},
-    { path: '/user-wall', component: Wall},
+    { path: '/login', component: Login, name: 'login'},
+    { path: '/register', component: Register, name: 'register'},
+    { path: '/user-profile', component: Profile, name: 'user-profile'},
+    { path: '/user-wall', component: Wall, name: 'user-wall'},
     // { path: '/header-nav', component: HeaderNav},
 ];
 
 export const router = new VueRouter({
-    routes // short for `routes: routes`
+    routes,
+    //mode: "history", //commented yet
 });
+

@@ -3,7 +3,6 @@ import Vue from 'vue'
 import {router} from './routes/index'
 import App from './components/App.vue';
 import store from './store/index'
-import Login from "./components/auth/Login";
 
 window.Vue = Vue
 

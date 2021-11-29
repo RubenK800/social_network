@@ -15,18 +15,36 @@ export default {
     },
     actions:
         {
-            login() {
+            login(context,payload) {
                 axios.post('/login', {
-                    email: this.email, password: this.password
-                }).then(response => {
+                        email: payload.email,
+                        password: payload.password
+                    }
+                ).then(response => {
+                    console.log(payload.email + " " + payload.password);
+                    console.log(response.data);
                     if (response.status === 201) {
                         console.log('login')
                     } else {
-                        console.log(response.status)
+                        //console.log(response.data)
                     }
                 }).catch(error => {
-                    console.log('oops')
+                    if (error.response) {
+                        console.log(error.response.data.errors.email[0]); //strange, but yet we will let it be like this.
+                    }
                 });
+            },
+
+            register(context, payload){
+                console.log(payload.name + " " + payload.email + " " + payload.password + " " + payload.password_confirmation);
+                axios.post('/register',{
+                    name: payload.name,
+                    email: payload.email,
+                    password: payload.password,
+                    password_confirmation: payload.password_confirmation
+                }).then(response => {
+                    console.log(response.data);
+                })
             },
 
             logout() {
@@ -37,6 +55,7 @@ export default {
                 }).catch(error => {
                     console.log('oops')
                 });
+                //return 'Hello Garry!!!'
             },
         }
 }

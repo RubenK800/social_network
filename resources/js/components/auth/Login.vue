@@ -1,5 +1,6 @@
 <template>
 <div id="login">
+<!--    <header-nav></header-nav>-->
     <div class="container">
         <div class="d-flex justify-content-center h-100">
             <div class="card">
@@ -12,7 +13,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <form v-on:click.prevent="login">
+                    <form>
                         <div class="input-group form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -35,14 +36,14 @@
                             </label>Remember Me
                         </div>
                         <div class="form-group">
-                            <input type="submit" value="Login" class="btn float-right login_btn">
+                            <input type="submit" v-on:click.prevent="login" value="Login" class="btn float-right login_btn">
                         </div>
                     </form>
                 </div>
                 <div class="card-footer">
                     <div class="d-flex justify-content-center links">
                         Don't have an account?
-                        <router-link to="register" v-on:click.prevent="$emit('login-button-clicked')">Sign Up</router-link>
+                        <router-link to="register" v-on:click.native.prevent='hideLogin'>Sign Up</router-link>
                     </div>
                     <div class="d-flex justify-content-center">
                         <a href="#">Forgot your password?</a>
@@ -57,24 +58,39 @@
 
 <script>
 
+// import HeaderNav from "../layout/HeaderNav";
+
 export default {
     name: "Login",
+    //components: {HeaderNav},
     data: () => {
         return {
             email: '',
-            password: ''
+            password: '',
+            isHidden: false
         }
     },
 
     methods:{
         login(){
-            this.$store.dispatch("users/login")
+            this.$store.dispatch('users/login', {
+                email: this.email,
+                password: this.password
+            }).then((res) => {
+                console.log(res)
+            }).catch((error) => {
+                // catch the error
+                console.log(error);
+            });
         },
-        register(){
-            this.$destroy();
-            console.log('deleted');
+
+        hideLogin(){
+            this.$emit('hideLogin');
+            console.log('Hide login');
         }
     },
+
+    //template: HeaderNav
 }
 
 </script>

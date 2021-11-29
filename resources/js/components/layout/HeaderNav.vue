@@ -48,7 +48,9 @@
         },
         methods:{
              logout(){
-                 this.$store.dispatch("users/logout");
+                 this.$store.dispatch("users/logout").then((res) => {
+                     //console.log(res)
+                 });
              },
         },
     }
