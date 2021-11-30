@@ -13,7 +13,7 @@ class UsersProfilesController extends Controller
     {
 //        $userId = Auth::id();
 //        $avatar = UsersAvatar::where('user_id',$userId)->first();
-        return response()->json(Auth::user(), 201);//Auth::user();/*Response::json([
+        //return '';/*response()->json(Auth::user(), 201);*///Auth::user();/*Response::json([
            // 'hello' => 'ohhh'
         //], 201);*///http_response_code(201);//view('user-profile.profile',['avatar'=>$avatar]);
     }

@@ -13,7 +13,7 @@
         components: {
             HeaderNav,
         },
-        data () {
+        data() {
             return {
                 isHidden: false
             }

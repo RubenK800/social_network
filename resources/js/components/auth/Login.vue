@@ -1,97 +1,105 @@
 <template>
-<div id="login">
-<!--    <header-nav></header-nav>-->
-    <div class="container">
-        <div class="d-flex justify-content-center h-100">
-            <div class="card">
-                <div class="card-header">
-                    <h3>Sign In</h3>
-                    <div class="d-flex justify-content-end social_icon">
-                        <span><i class="fab fa-facebook-square"></i></span>
-                        <span><i class="fab fa-google-plus-square"></i></span>
-                        <span><i class="fab fa-twitter-square"></i></span>
+    <div id="login">
+        <!--    <header-nav></header-nav>-->
+        <div class="container">
+            <div class="d-flex justify-content-center h-100">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Sign In</h3>
+                        <div class="d-flex justify-content-end social_icon">
+                            <span><i class="fab fa-facebook-square"></i></span>
+                            <span><i class="fab fa-google-plus-square"></i></span>
+                            <span><i class="fab fa-twitter-square"></i></span>
+                        </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <form>
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    <div class="card-body">
+                        <form>
+                            <div class="input-group form-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                </div>
+                                <label>
+                                    <input type="email" v-model="email" name="email" class="form-control"
+                                           placeholder="email">
+                                </label>
                             </div>
-                            <label>
-                                <input type="email" v-model="email" name="email" class="form-control" placeholder="email">
-                            </label>
-                        </div>
-                        <div class="input-group form-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-key"></i></span>
+                            <div class="input-group form-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-key"></i></span>
+                                </div>
+                                <label>
+                                    <input type="password" v-model="password" name="password" class="form-control"
+                                           placeholder="password">
+                                </label>
                             </div>
-                            <label>
-                                <input type="password" v-model = "password" name="password" class="form-control" placeholder="password">
-                            </label>
-                        </div>
-                        <div class="row align-items-center remember">
-                            <label>
-                                <input type="checkbox">
-                            </label>Remember Me
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" v-on:click.prevent="login" value="Login" class="btn float-right login_btn">
-                        </div>
-                    </form>
-                </div>
-                <div class="card-footer">
-                    <div class="d-flex justify-content-center links">
-                        Don't have an account?
-                        <router-link to="register" v-on:click.native.prevent='hideLogin'>Sign Up</router-link>
+                            <div class="row align-items-center remember">
+                                <label>
+                                    <input type="checkbox">
+                                </label>Remember Me
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" v-on:click.prevent="login" value="Login"
+                                       class="btn float-right login_btn">
+                            </div>
+                        </form>
                     </div>
-                    <div class="d-flex justify-content-center">
-                        <a href="#">Forgot your password?</a>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-center links">
+                            Don't have an account?
+                            <router-link to="register">Sign Up</router-link>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <a href="#">Forgot your password?</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="row justify-content-center" v-if="!isHidden">Sorry, but your entered login or password is not
+            correct
+        </div>
+        <!--    <router-link to="/register">Hellooser</router-link>-->
     </div>
-<!--    <router-link to="/register">Hellooser</router-link>-->
-</div>
 </template>
 
 <script>
 
-// import HeaderNav from "../layout/HeaderNav";
+    // import HeaderNav from "../layout/HeaderNav";
 
-export default {
-    name: "Login",
-    //components: {HeaderNav},
-    data: () => {
-        return {
-            email: '',
-            password: '',
-            isHidden: false
-        }
-    },
-
-    methods:{
-        login(){
-            this.$store.dispatch('users/login', {
-                email: this.email,
-                password: this.password
-            }).then((res) => {
-                console.log(res)
-            }).catch((error) => {
-                // catch the error
-                console.log(error);
-            });
+    export default {
+        name: "Login",
+        //components: {HeaderNav},
+        data: () => {
+            return {
+                email: '',
+                password: '',
+                isHidden: true
+            }
         },
 
-        hideLogin(){
-            this.$emit('hideLogin');
-            console.log('Hide login');
-        }
-    },
+        methods: {
+            login() {
+                this.$store.dispatch('users/login', {
+                    email: this.email,
+                    password: this.password
+                }).then((res) => {
+                    //console.log(res)
+                    if (res === 'These credentials do not match our records.')
+                        this.isHidden = false;
+                }).catch((error) => {
+                    // catch the error
+                    console.log(error);
+                });
+            },
 
-    //template: HeaderNav
-}
+            hideLogin() {
+                this.$emit('hideLogin');
+                console.log('Hide login');
+            }
+        },
+
+        //template: HeaderNav
+    }
 
 </script>
 

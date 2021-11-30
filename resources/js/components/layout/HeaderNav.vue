@@ -20,12 +20,12 @@
                             <div @click.prevent v-on:click="logout" class="nav-link">Logout</div>
                         </li>
                     </ul>
-<!--                    <form action="/logout" method="post" class="navbar-nav my-2 my-lg-0">-->
-<!--                        @csrf-->
-<!--                        <input type="submit" value="logout" class="nav-item">-->
-<!--                    </form>-->
-<!--                    <a href="#" @click.prevent="logout" class="nav-item">logout</a>-->
-<!--                    <button v-on:click="logout" class="nav-item">logout</button>-->
+                    <!--                    <form action="/logout" method="post" class="navbar-nav my-2 my-lg-0">-->
+                    <!--                        @csrf-->
+                    <!--                        <input type="submit" value="logout" class="nav-item">-->
+                    <!--                    </form>-->
+                    <!--                    <a href="#" @click.prevent="logout" class="nav-item">logout</a>-->
+                    <!--                    <button v-on:click="logout" class="nav-item">logout</button>-->
                 </div>
             </div>
         </nav>
@@ -40,18 +40,18 @@
         data: () => ({
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
         }),
-        computed:{
+        computed: {
             ...mapGetters('comments', ['comment']),
         },
         mounted() {
             console.log(this.comment);
         },
-        methods:{
-             logout(){
-                 this.$store.dispatch("users/logout").then((res) => {
-                     //console.log(res)
-                 });
-             },
+        methods: {
+            logout() {
+                this.$store.dispatch("users/logout").then((res) => {
+                    //console.log(res)
+                });
+            },
         },
     }
 </script>

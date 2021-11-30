@@ -7,7 +7,7 @@ import store from './store/index'
 window.Vue = Vue
 
 const app = new Vue({
-    el:'#app',
+    el: '#app',
     router,
     store,
     render: h => h(App)
