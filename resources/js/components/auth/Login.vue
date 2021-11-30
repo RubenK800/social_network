@@ -83,18 +83,21 @@
                     email: this.email,
                     password: this.password
                 }).then((res) => {
-                    //console.log(res)
-                    if (res === 'These credentials do not match our records.')
+                    console.log(res)
+                    if (res === 'These credentials do not match our records.') {
                         this.isHidden = false;
+                    } else {
+                        this.$router.push('/user-profile');
+                    }
                 }).catch((error) => {
                     // catch the error
                     console.log(error);
                 });
             },
 
-            hideLogin() {
-                this.$emit('hideLogin');
-                console.log('Hide login');
+            goToUserProfile() {
+                this.$router.push('/home');
+                console.log('Open user profile component');
             }
         },
 

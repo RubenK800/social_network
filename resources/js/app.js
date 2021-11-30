@@ -4,7 +4,9 @@ import {router} from './routes/index'
 import App from './components/App.vue';
 import store from './store/index'
 
-window.Vue = Vue
+window.Vue = Vue;
+
+Vue.prototype.$userId = document.querySelector("meta[name='user-id']").getAttribute('content');
 
 const app = new Vue({
     el: '#app',

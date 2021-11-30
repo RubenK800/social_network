@@ -23,8 +23,10 @@ export default {
                 )
                 console.log(payload.email + " " + payload.password);
                 console.log(response.data);
-                if (response.status === 201) {
-                    console.log('login')
+                if (response.status === 200) {
+                    if (response.data.two_factor != null) { //if delete "!= null" part, then it will not work, but why?
+                        console.log('login' + response.data.two_factor);
+                    }
                 } else {
                     //console.log(response.data)
                 }
@@ -36,6 +38,22 @@ export default {
                 }
             }
         },
+
+
+        async profileAvatar() {
+            try {
+                const response = await axios.get('/user-profile');
+                return response.data.avatar.user_avatar_name;
+            } catch (error) {
+                if (error.response) {
+                    // if (error.response.data.errors.email[0]) {
+                    //     return error.response.data.errors.email[0]; //strange, but yet we will let it be like this.
+                    // }
+                }
+            }
+        },
+
+
 
         register(context, payload) {
             console.log(payload.name + " " + payload.email + " " + payload.password + " " + payload.password_confirmation);

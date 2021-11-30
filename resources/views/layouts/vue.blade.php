@@ -5,6 +5,7 @@
     <title></title>
     <meta name="csrf-token" content="{{csrf_token()}}">
     <link rel="stylesheet" href={{ asset('css/bootstrap.css') }}>
+    <meta name="user-id" content="{{ Auth::id() }}">
 </head>
 <body>
 

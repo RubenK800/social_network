@@ -50,7 +50,7 @@
                     <div class="control-group">
                         <!-- Button -->
                         <div class="controls">
-                            <button class="btn btn-success" v-on:click.prevent="register">Register</button>
+                            <button type="button" class="btn btn-success" v-on:click="register">Register</button>
                         </div>
                     </div>
                 </fieldset>
