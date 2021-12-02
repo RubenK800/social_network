@@ -1,10 +1,10 @@
-$('#submit-post').on('click', function () {
-    //https://stackoverflow.com/a/14772836
-    if ($("#image")[0].files.length === 0 && $("#text")[0].value === '') {
-        alert("nothing to post");
-        return false;
-    }
-});
+// $('#submit-post').on('click', function () {
+//     //https://stackoverflow.com/a/14772836
+//     if ($("#image")[0].files.length === 0 && $("#text")[0].value === '') {
+//         alert("nothing to post");
+//         return false;
+//     }
+// });
 
 $('.submit-comment').on('click', function () {
     let type = $(this).attr('data-comment-value');

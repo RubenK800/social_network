@@ -27,6 +27,7 @@ export default {
                     if (response.data.two_factor != null) { //if delete "!= null" part, then it will not work, but why?
                         console.log('login' + response.data.two_factor);
                     }
+
                 } else {
                     //console.log(response.data)
                 }
@@ -40,7 +41,7 @@ export default {
         },
 
 
-        async profileAvatar() {
+        async loadProfileAvatar() {
             try {
                 const response = await axios.get('/user-profile');
                 return response.data.avatar.user_avatar_name;
@@ -53,7 +54,41 @@ export default {
             }
         },
 
+        async uploadProfileAvatar(context, payload){
+            try {
+                const avatar = payload.avatar;
+                let data = new FormData();
+                data.append('file',avatar);
+                const response = await axios.post('/avatar', data);
+                console.log("payload.avatar = ");
+                console.log(payload.avatar);
+                return response.data;
+            } catch (error) {
+            }
+        },
 
+        async getCurrentUserId(){
+            try {
+                const response = await axios.get('/users');
+                return response.data;
+            } catch (error) {
+
+            }
+        },
+
+        async addNewPost(context, payload){
+            try {
+                const avatar = payload.image;
+                let data = new FormData();
+                data.append('file',avatar);
+                const response = await axios.post('/posts', data);
+                console.log("payload.image = ");
+                console.log(payload.image);
+                return response.data;
+            } catch (error) {
+
+            }
+        },
 
         register(context, payload) {
             console.log(payload.name + " " + payload.email + " " + payload.password + " " + payload.password_confirmation);

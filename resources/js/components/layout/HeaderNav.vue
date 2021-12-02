@@ -2,12 +2,12 @@
     <div>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
-                <a class="navbar-brand" href="">Ci4 Login</a>
+                <router-link class="navbar-brand" to="login">Ci4 Login</router-link>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
                             <!--        <a class="nav-link " aria-current="page" href="{{route('user.profile.index')}}">Dashboard</a>-->
-                            <router-link to="user-profile" class="nav-link">DashBoard</router-link>
+                            <router-link to="" class="nav-link">DashBoard</router-link>
                             <!--                        <router-view></router-view>-->
                         </li>
                         <li class="nav-item">
@@ -50,6 +50,8 @@
             logout() {
                 this.$store.dispatch("users/logout").then((res) => {
                     //console.log(res)
+                    Vue.prototype.$userId = null;
+                    this.$router.push('/login');
                 });
             },
         },

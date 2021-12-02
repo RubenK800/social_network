@@ -87,7 +87,11 @@
                     if (res === 'These credentials do not match our records.') {
                         this.isHidden = false;
                     } else {
-                        this.$router.push('/user-profile');
+                        this.$store.dispatch('users/getCurrentUserId').then((res) => {
+                            //console.log('userId = ' + res.userId)
+                            Vue.prototype.$userId = res.userId;
+                            this.$router.push('/user-profile');
+                        });
                     }
                 }).catch((error) => {
                     // catch the error

@@ -18,7 +18,12 @@ class UsersAvatarsController
 
     public function store(Request $request)
     {
-        $file = $request->file('img');
+        //$file = $request->file('img');
+        $file = $request->file('file');
+        //dd($file);
+//        return response()->json([
+//            'file' => $file->getClientOriginalName(),
+//        ]);
         $userId = Auth::id();
         $name = Str::random(40).'.jpg';
             $entry = UsersAvatar::where('user_id', $userId)->first();
