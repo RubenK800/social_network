@@ -110,6 +110,28 @@
 
 </script>
 
-<style scoped>
+<style>
+    /*input:-webkit-autofill,*/
+    /*input:-webkit-autofill:hover,*/
+    /*input:-webkit-autofill:focus,*/
+    /*textarea:-webkit-autofill,*/
+    /*textarea:-webkit-autofill:hover,*/
+    /*textarea:-webkit-autofill:focus,*/
+    /*select:-webkit-autofill,*/
+    /*select:-webkit-autofill:hover,*/
+    /*select:-webkit-autofill:focus {*/
+    /*    font-size: 24px;*/
+    /*}*/
+
+    /*input{*/
+    /*    font-size: 24px;*/
+    /*}*/
+    /*input:-webkit-autofill{*/
+    /*    font-size: 24px;*/
+    /*}*/
+    input:-webkit-autofill::first-line {
+        font-size: 14px;
+        font-family: Roman Italic, serif !important;
+    }
 
 </style>

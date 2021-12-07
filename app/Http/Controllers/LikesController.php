@@ -58,6 +58,6 @@ class LikesController extends Controller
             }
         }
 
-        return "ok";//response($data); //вместо echo $data
+        return $request->post_id;//"ok";//response($data); //вместо echo $data
     }
 }

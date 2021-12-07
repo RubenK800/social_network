@@ -1,4 +1,4 @@
-import VueRouter from 'vue-router'
+import VueRouter from 'vue-router';
 import Login from "../components/auth/Login";
 import Register from "../components/auth/Register";
 import Profile from "../components/user/Profile";
@@ -37,6 +37,10 @@ const routes = [
         name: 'user-wall',
         meta: {
             requiresAuth: true,
+        },
+        props: {
+            userWallKey: 0,
+            dataPostLike: 0
         }
     }
     // { path: '/header-nav', component: HeaderNav},

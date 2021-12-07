@@ -13,6 +13,8 @@ class UsersWallsController
         //ddd($posts);
         //dd($posts[0]->comments[20]->image);
 
-        return view('user-profile.user-wall',['posts' => $posts]);
+        return response()->json([
+            'posts' => $posts,
+        ]);/*view('user-profile.user-wall',['posts' => $posts])*/;
     }
 }

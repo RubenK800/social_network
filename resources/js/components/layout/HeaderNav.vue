@@ -44,7 +44,7 @@
             ...mapGetters('comments', ['comment']),
         },
         mounted() {
-            console.log(this.comment);
+            //console.log(this.comment);
         },
         methods: {
             logout() {

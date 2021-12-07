@@ -1,7 +1,9 @@
 export default {
     namespaced: true,
     state: {
-        user: {}
+        user: {
+
+        }
     },
     getters: {
         user(state) {
@@ -70,20 +72,6 @@ export default {
         async getCurrentUserId(){
             try {
                 const response = await axios.get('/users');
-                return response.data;
-            } catch (error) {
-
-            }
-        },
-
-        async addNewPost(context, payload){
-            try {
-                const avatar = payload.image;
-                let data = new FormData();
-                data.append('file',avatar);
-                const response = await axios.post('/posts', data);
-                console.log("payload.image = ");
-                console.log(payload.image);
                 return response.data;
             } catch (error) {
 

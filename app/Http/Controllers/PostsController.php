@@ -19,24 +19,26 @@ class PostsController extends Controller
 
     public function store(Request $request)
     {
-        $files = $request->file('img');
-        $postBody = $request->get('post-body');
+        $files = $request->all();
+        $postBody = $request->get('body');
         if ($files) {
             $postId = $this->createPost($postBody);
-            foreach($files as $file) {
-                $file->storeAs('post_pics', $file->getClientOriginalName());
-                $postImageName = $file->getClientOriginalName();
-                $this->savePostImage($postId, $postImageName);
+            for($i = 0; $i<count($files); $i++) {
+                if (array_key_exists('files'.$i,$files)) {
+                    $files['files'.$i]->storeAs('post_pics', $files['files'.$i]->getClientOriginalName());
+                    $postImageName = $files['files'.$i]->getClientOriginalName();
+                    $this->savePostImage($postId, $postImageName);
+                }
             }
         } else {
             if ($postBody) {
-                Post::insert(['user_id' => Auth::id(), 'body' => $postBody, 'likes_count' => 0, 'comments_count' => 0, 'reposts_count' => 0]);
+                $postId = $this->createPost($postBody);
+//                Post::insert(['user_id' => Auth::id(), 'body' => $postBody, 'likes_count' => 0, 'comments_count' => 0,
+//                    'reposts_count' => 0]);
             }
         }
 
-        $posts = Auth::user()->posts()->get();
-        return //view('user-profile.user-wall', ['posts' => $posts]);
-        Redirect::route('user-wall.index')->with(['posts'=>$posts]);
+        return Redirect::route('user-wall.index');
     }
 
     public function edit($id, Request $request){
@@ -71,7 +73,7 @@ class PostsController extends Controller
 
         $posts = Auth::user()->posts()->get();
         return //view('user-profile.user-wall', ['posts' => $posts]);
-            Redirect::route('user-wall.index')->with(['posts'=>$posts]);
+            Redirect::route('user-wall.index')->with(['posts' => $posts]);
     }
 
     public function destroy($id){
@@ -88,7 +90,11 @@ class PostsController extends Controller
     private function createPost($postBody):int {
         $post = new Post();
         $post->user_id = Auth::id();
-        $post->body = $postBody;
+        if ($postBody){
+            $post->body = $postBody;
+        } else {
+            $post->body = ' ';
+        }
         $post->likes_count = 0;
         $post->comments_count = 0;
         $post->reposts_count = 0;
