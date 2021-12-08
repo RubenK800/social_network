@@ -6,26 +6,15 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <!--        <a class="nav-link " aria-current="page" href="{{route('user.profile.index')}}">Dashboard</a>-->
                             <router-link to="" class="nav-link">DashBoard</router-link>
-                            <!--                        <router-view></router-view>-->
                         </li>
                         <li class="nav-item">
-                            <!--            <a class="nav-link {{ Route::currentRouteNamed('user.profile.show') ? 'active' : '' }}" href="{{route('user.profile.index')}}">Profile</a>-->
-                            <!--            <profile></profile>-->
                             <router-link to="user-profile" class="nav-link">Profile</router-link>
-                            <!--                        <router-view></router-view>-->
                         </li>
                         <li class="nav-item">
                             <div @click.prevent v-on:click="logout" class="nav-link">Logout</div>
                         </li>
                     </ul>
-                    <!--                    <form action="/logout" method="post" class="navbar-nav my-2 my-lg-0">-->
-                    <!--                        @csrf-->
-                    <!--                        <input type="submit" value="logout" class="nav-item">-->
-                    <!--                    </form>-->
-                    <!--                    <a href="#" @click.prevent="logout" class="nav-item">logout</a>-->
-                    <!--                    <button v-on:click="logout" class="nav-item">logout</button>-->
                 </div>
             </div>
         </nav>

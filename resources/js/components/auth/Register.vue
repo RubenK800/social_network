@@ -87,7 +87,6 @@
             },
 
             hideRegister() {
-                //this.$emit('hideRegister');
                 console.log(this.$route.name);
                 console.log('Hide Register');
             }

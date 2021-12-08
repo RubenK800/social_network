@@ -32,7 +32,7 @@
         methods: {
             getImage() {
                 this.$store.dispatch('users/loadProfileAvatar').then((res) => {
-                    console.log('/storage/avatars/avatar-of-user' + this.$userId + '/' + res)
+                    console.log('/storage/avatars/avatar-of-user' + this.$userId + '/' + res);
                     this.src = '/storage/avatars/avatar-of-user' + this.$userId + '/' + res;
                 }).catch((error) => {
                     // catch the error
