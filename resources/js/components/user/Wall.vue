@@ -45,98 +45,8 @@
             <hr>
 
             <div v-if="isCommentsListEnabled(post['id'])">
-                <div v-for="comment in post.comments">
-                    <div v-if="comment['receiver_comment_id'] === 0">
-                        <br>
-                        <div class="bg-light">
-                            <div v-if="comment.user" class="text-light bg-dark">
-                                <!--                            @if(!is_null($independentcomment->user))-->
-                                {{comment.user['name']}}
-                            </div>
-                            <div v-if="!comment.user" class="text-light bg-dark">
-                                {{'User'}}
-                            </div>
-                            <div>
-                                {{comment['comment_text']}}
-                            </div>
-                            <!--                        <div v-if="comment.image['image_name']">-->
-                            <!--                            <img :src="'storage/comment_pics/'+comment.image['image_name']"-->
-                            <!--                                 alt="go away from me! I'm sad and angry" height="150px">-->
-                            <!--                        </div>-->
-                        </div>
-                        <div>
-                            <button class="comment-like-dislike"
-                                    :data-comment-like-dislike="'ind-c-like'+comment['id']">Like
-                            </button>
-                            <button class="comment-like-dislike"
-                                    :data-comment-like-dislike="'ind-c-dislike'+comment['id']">
-                                Dislike
-                            </button>
-                            <button class="comment-function-show"
-                                    :data-comment-function-show="'ind-reply'+comment['id']">Reply
-                            </button>
-                            <div v-if="hasUserTheNeededPermission(comment.user['id'])">
-                                <!--                            @if($independentcomment->user['id'] === $userId)-->
-                                <button class="comment-edit" :data-edit="'ind-edit'+comment['id']">Edit
-                                </button>
-                                <form>
-                                    <!--                            action="{{route('comments.destroy',['id' => $independentcomment['id']])}}"-->
-                                    <!--                            method="post" -->
-                                    <!--                                >-->
-                                    <!--                            @method('DELETE')-->
-                                    <input type="submit" value="Delete">
-                                </form>
-                                <!--                            @endif-->
-                            </div>
-                        </div>
-                    </div>
-                    <div v-if="comment['receiver_comment_id'] !== 0" class="ms-4">
-                        <br>
-                        <div class="bg-light">
-                            <div v-if="comment.user" class="text-light bg-dark">
-                                <!--                            @if(!is_null($independentcomment->user))-->
-                                {{comment.user['name']}}
-                            </div>
-                            <div v-if="!comment.user" class="text-light bg-dark">
-                                {{'User'}}
-                            </div>
-                            <div>
-                                {{comment['comment_text']}}
-                            </div>
-                            <!--                        <div v-if="comment.image['image_name']">-->
-                            <!--                            <img :src="'storage/comment_pics/'+comment.image['image_name']"-->
-                            <!--                                 alt="go away from me! I'm sad and angry" height="150px">-->
-                            <!--                        </div>-->
-                        </div>
-                        <div>
-                            <button class="comment-like-dislike"
-                                    :data-comment-like-dislike="'ind-c-like'+comment['id']">Like
-                            </button>
-                            <button class="comment-like-dislike"
-                                    :data-comment-like-dislike="'ind-c-dislike'+comment['id']">
-                                Dislike
-                            </button>
-                            <button class="comment-function-show"
-                                    :data-comment-function-show="'ind-reply'+comment['id']">Reply
-                            </button>
-                            <div v-if="hasUserTheNeededPermission(comment.user['id'])">
-                                <!--                            @if($independentcomment->user['id'] === $userId)-->
-                                <button class="comment-edit" :data-edit="'ind-edit'+comment['id']">Edit
-                                </button>
-                                <form>
-                                    <!--                            action="{{route('comments.destroy',['id' => $independentcomment['id']])}}"-->
-                                    <!--                            method="post" -->
-                                    <!--                                >-->
-                                    <!--                            @method('DELETE')-->
-                                    <input type="submit" value="Delete">
-                                </form>
-                                <!--                            @endif-->
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
+                <comments-cycle :commentsArray = "comments = post.comments"></comments-cycle>
+<!--                <comments-cycle :commentsArray = "comments = post.comments[0].dependent_comments"></comments-cycle>-->
             </div>
             <hr>
         </div>
@@ -146,9 +56,11 @@
 
 <script>
     import {mapGetters} from 'vuex'
+    import CommentsCycle from "../comments/CommentsCycle";
 
     export default {
         name: "Wall",
+        components: {CommentsCycle},
         data: () => {
             return {
                 body: '',
@@ -157,7 +69,8 @@
                 postId: 0,
                 isShown: false,
                 text: '',
-                userId: Vue.prototype.$userId
+                userId: Vue.prototype.$userId,
+                comments: ''
             }
         },
 
@@ -167,6 +80,7 @@
 
         mounted() {
             this.userPosts = this.posts;
+            this.comments = ''
             console.log(this.userPosts);
             //console.log('Vue.prototype.$userId = '+Vue.prototype.$userId)
         },
@@ -220,9 +134,9 @@
                 console.log(this.files.length);
             },
 
-            hasUserTheNeededPermission(userId){
-                return Number.parseInt(userId) === Number.parseInt(Vue.prototype.$userId);
-            }
+            // hasUserTheNeededPermission(userId){
+            //     return Number.parseInt(userId) === Number.parseInt(Vue.prototype.$userId);
+            // }
         },
 
         beforeCreate() {

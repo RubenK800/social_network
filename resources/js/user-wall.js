@@ -39,14 +39,14 @@ $(".likeIt").on("click", function (event) {
     alert($(event.target).attr('data-post-like'));
 });
 
-$(".comment-like-dislike").on("click", function (event) {
-    let targetDataValue = $(event.target).attr('data-comment-like-dislike');
-    if (targetDataValue.includes('ind-c')) {
-        getCommentIdFromData(targetDataValue, 'ind-c');
-    } else if (targetDataValue.includes('d-c')) {
-        getCommentIdFromData(targetDataValue, 'd-c');
-    }
-});
+// $(".comment-like-dislike").on("click", function (event) {
+//     let targetDataValue = $(event.target).attr('data-comment-like-dislike');
+//     if (targetDataValue.includes('ind-c')) {
+//         getCommentIdFromData(targetDataValue, 'ind-c');
+//     } else if (targetDataValue.includes('d-c')) {
+//         getCommentIdFromData(targetDataValue, 'd-c');
+//     }
+// });
 
 $('.comment-edit').on('click', function () {
     let targetDataValue = $(event.target).attr('data-edit');
@@ -96,31 +96,31 @@ function showOrHideElement(actionName, attribute, element) {
     }
 }
 
-function getCommentIdFromData(targetDataValue, commentType) {
-    let commentId = null;
-    let type = null;
-    if (targetDataValue.includes('dislike')) {
-        type = 'dislike';
-        commentId = targetDataValue.replace(commentType + '-dislike', '');
-        alert(type);
-    } else if (targetDataValue.includes('like')) {
-        type = 'like';
-        commentId = targetDataValue.replace(commentType + '-like', '');
-        alert(type);
-    }
-    $.ajax({
-        url: 'likes',
-        data: {'comment_id': commentId, 'type': type},
-        type: 'post',
-        success: function (response) {
-            console.log(response);
-        },
-        error: function (x, xs, xt) {
-            console.log(x);
-        }
-    });
-    alert(commentId);
-}
+// function getCommentIdFromData(targetDataValue, commentType) {
+//     let commentId = null;
+//     let type = null;
+//     if (targetDataValue.includes('dislike')) {
+//         type = 'dislike';
+//         commentId = targetDataValue.replace(commentType + '-dislike', '');
+//         alert(type);
+//     } else if (targetDataValue.includes('like')) {
+//         type = 'like';
+//         commentId = targetDataValue.replace(commentType + '-like', '');
+//         alert(type);
+//     }
+//     $.ajax({
+//         url: 'likes',
+//         data: {'comment_id': commentId, 'type': type},
+//         type: 'post',
+//         success: function (response) {
+//             console.log(response);
+//         },
+//         error: function (x, xs, xt) {
+//             console.log(x);
+//         }
+//     });
+//     alert(commentId);
+// }
 
 $('.delete-post-image').on('click', function () {
     let postId = $(event.target).attr('data-post');

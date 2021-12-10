@@ -21,7 +21,7 @@ class Post extends Model
 //    }
 //
     public function comments(){
-        return $this->hasMany(PostComment::class, 'post_id');
+        return $this->hasMany(PostComment::class, 'post_id')->where('receiver_comment_id',0);
     }
 //
 //    public function postReposts(){

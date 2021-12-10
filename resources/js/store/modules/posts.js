@@ -59,11 +59,13 @@ export default {
         async addPostLike(context,payload){
             alert(payload.post_id)
             try{
-                await axios.post('/likes', {post_id:payload.post_id}).then(res => {
+                await axios.post('/likes', {
+                    post_id:payload.post_id
+                }).then(res => {
                     //context.commit('posts', res.data);
                     // console.log(res.data);
                 });
-            }catch (error) {
+            } catch (error) {
 
             }
         }

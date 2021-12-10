@@ -28,5 +28,20 @@ export default {
                 console.log(err)
             })
         },
+
+        async setLikeOrDislike(context, payload){
+            alert(payload.comment_id)
+            try {
+                await axios.post('/likes', {
+                    comment_id:payload.comment_id,
+                    type:payload.type
+                }).then(res => {
+                    //context.commit('posts', res.data);
+                    // console.log(res.data);
+                });
+            } catch (error) {
+
+            }
+        }
     }
 }
