@@ -1,7 +1,7 @@
 <template>
 <div>
 <!--    action="{{route('posts.store')}}"-->
-    <form enctype="multipart/form-data">
+    <form>
         <div class="col-8 mx-auto">
             <label>
                 <textarea v-model="body" class="form-control" name="post-body" id="text" rows="10" style="width: 800px"></textarea>
@@ -9,7 +9,7 @@
         </div>
         <div class="col-8 mx-auto">
             <label for="image" style="border: solid #1a202c 1px">Add image</label>
-            <input type="file" v-on:change='formFile' id="image" name="img[]" multiple hidden>
+            <input type="file" v-on:change='postFormFile' id="image" name="img[]" multiple hidden>
         </div>
         <br>
         <div class="col-8 mx-auto">
@@ -27,7 +27,9 @@
                 <div class="col-0" v-for="image in post.images">
                     <img v-bind:src="'storage/post_pics/' + image['image_name']"
                          alt="alternate text"
-                         height="250px" width="250px">
+                         height="250px" width="250px"
+                         @error="hidePostPic"
+                    >
                 </div>
             </div>
             <hr>
@@ -35,18 +37,66 @@
                 <button @click="postLike(post['id'])">Like it</button>
                 <button v-if="!isShowCommentsEnabled(post['id'])" @click="selectedPostId(post['id'], true)">Show Comments</button>
                 <button v-if="isHideCommentsEnabled(post['id'])" @click="selectedPostId(post['id'], false)">Hide Comments</button>
-<!--                <button class="post-edit" data-edit="post-edit{{$post['id']}}">Edit</button>-->
-<!--                <form action="{{route('posts.destroy',['id'=>$post['id']])}}" method="post">-->
-<!--                    @method('DELETE')-->
-<!--                    @csrf-->
-<!--                    <input type="submit" value="Delete">&#45;&#45;}}-->
-<!--                </form>-->
+                <button @click="editPost">
+                    Edit
+                </button>
+                <button @click="deletePost(post['id'])">
+                    Delete
+                </button>
             </div>
             <hr>
 
+            <div v-if="isEditPostEnabled">
+<!--                action="{{route('posts.update', ['id' => $post['id']])}}" method="post"-->
+                <form>
+<!--                    @method('PUT')-->
+                    <div class="col-8 mx-auto">
+                        <label>
+                            <textarea v-model="editPostText" rows="5" style="width: 800px"></textarea>
+                        </label>
+                    </div>
+                    <div class="row container" v-for="image in post.images">
+                        <div class="col-sm-3">
+                            <div class="row">
+                                <img v-bind:src="'storage/post_pics/'+image['image_name']"
+                                     alt="alternate text"
+                                     height="250px">
+                            </div>
+                            <div>
+                                <button type="button" class="delete-post-image">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8 mx-auto">
+                        <label style="border: solid #1a202c 1px">Add image
+                            <input type="file" name="img[]" multiple hidden>
+                        </label>
+                    </div>
+                    <br>
+                    <div class="col-8 mx-auto">
+                        <input type="button" value="Save changes">
+                    </div>
+                </form>
+                <button class="post-edit-form-hide">
+                    I changed my mind
+                </button>
+            </div>
+
             <div v-if="isCommentsListEnabled(post['id'])">
+
+                <form>
+                    <label>
+                        <input type="text" v-model="commentText" name="comment-text" >
+                    </label>
+                    <label style="border: solid #1a202c 1px">Add Image
+                        <input type="file" v-on:change="formFile" name="comment_image" hidden>
+                    </label>
+                    <input type="button" @click="sendComment(post['id'])" value="Send comment">
+                </form>
+
                 <comments-cycle :commentsArray = "comments = post.comments"></comments-cycle>
-<!--                <comments-cycle :commentsArray = "comments = post.comments[0].dependent_comments"></comments-cycle>-->
             </div>
             <hr>
         </div>
@@ -64,13 +114,19 @@
         data: () => {
             return {
                 body: '',
-                files: '',
+                postFiles: [],
+                commentFile:[],
                 userPosts: '',
                 postId: 0,
                 isShown: false,
                 text: '',
                 userId: Vue.prototype.$userId,
-                comments: ''
+                comments: '',
+                postImageShow: true,
+                commentText: '',
+                isEditPostEnabled: true,
+                editPostText: '',
+                editPostFiles: []
             }
         },
 
@@ -98,6 +154,10 @@
                     });
                     this.getPosts();
                 }
+            },
+
+            hidePostPic(e){
+                e.target.style.display='none';
             },
 
             isShowCommentsEnabled(postId){
@@ -129,10 +189,37 @@
                 this.isShown = isShown
             },
 
-            formFile(e){
-                this.files = e.target.files;
-                console.log(this.files.length);
+            postFormFile(e){
+                this.postFiles = e.target.files;
+                console.log(this.postFiles.length);
             },
+
+            formFile(e){
+                this.commentFile = e.target.files[0]
+            },
+
+            deletePost(postId){
+                this.$store.dispatch('posts/deletePost', {
+                    id: postId,
+                });
+            },
+
+            sendComment(postId){
+                this.$store.dispatch('comments/addComment', {
+                    post_id: postId,
+                    receiver_comment_id: 0,
+                    new_text: this.commentText,
+                    image: this.commentFile
+                });
+            },
+
+            editPost(postId){
+                this.$store.dispatch('posts/editPost', {
+                    id: postId,
+                    new_text: this.editPostText,
+                    image: this.editPostFiles
+                });
+            }
 
             // hasUserTheNeededPermission(userId){
             //     return Number.parseInt(userId) === Number.parseInt(Vue.prototype.$userId);

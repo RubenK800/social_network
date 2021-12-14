@@ -39,10 +39,10 @@
                     <hr>--}}
                 {{--            <post-functions name = "{{$post['id']}}" ></post-functions>--}}
                 {{--            <div>--}}
-                {{--                <button class="likeIt" data-post-like="{{$post['id']}}">Like it</button>--}}
-                {{--                <button class="show-comments hide-c{{$postNo}}" data-show-c = "show-c{{$postNo}}">Show Comments</button>--}}
-                {{--                <button class="hide-comments show-c{{$postNo}}" data-hide-c = "hide-c{{$postNo}}" hidden>Hide Comments</button>--}}
-                {{--                <button class="post-edit" data-edit="post-edit{{$post['id']}}">Edit</button>--}}
+                                <button class="likeIt" data-post-like="{{$post['id']}}">Like it</button>
+                                <button class="show-comments hide-c{{$postNo}}" data-show-c = "show-c{{$postNo}}">Show Comments</button>
+                                <button class="hide-comments show-c{{$postNo}}" data-hide-c = "hide-c{{$postNo}}" hidden>Hide Comments</button>
+                                <button class="post-edit" data-edit="post-edit{{$post['id']}}">Edit</button>
                 {{--                <form action="{{route('posts.destroy',['id'=>$post['id']])}}" method="post">--}}
                 {{--                    @method('DELETE')--}}
                 {{--                    @csrf--}}
@@ -50,44 +50,44 @@
                 {{--                </form>--}}
                 {{--            </div>--}}
                     <hr>
-{{--                    <div class="post-edit-form post-edit{{$post['id']}} post-edit-changed-mind{{$post['id']}}" hidden>--}}
-{{--                        <form action="{{route('posts.update', ['id' => $post['id']])}}" method="post"--}}
-{{--                              enctype="multipart/form-data">--}}
-{{--                            @csrf--}}
-{{--                            @method('PUT')--}}
-{{--                            <div class="col-8 mx-auto">--}}
-{{--                                <label>--}}
-{{--                                    <input type="text" name="post-body" id="text">--}}
-{{--                                    <textarea class="form-control" name="post-body" id="text" rows="5"--}}
-{{--                                              style="width: 800px"></textarea>--}}
-{{--                                </label>--}}
-{{--                            </div>--}}
-{{--                            <div class="row container">--}}
-{{--                                @foreach($post->images as $image)--}}
-{{--                                    <div class="col-sm-3">--}}
-{{--                                        <div class="row">--}}
-{{--                                            <img src="{{asset('storage/post_pics/' . $image['image_name'])}}"--}}
-{{--                                                 alt="{{asset('storage/post_pics/' . $image['image_name'])}}"--}}
-{{--                                                 height="250px">--}}
-{{--                                        </div>--}}
-{{--                                        <div>--}}
-{{--                                            <button type="button" class="delete-post-image" data-post="{{$post['id']}}"--}}
-{{--                                                    data-image-name="{{$image['image_name']}}">Delete--}}
-{{--                                            </button>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
-{{--                                @endforeach--}}
-{{--                            </div>--}}
-{{--                            <div class="col-8 mx-auto">--}}
-{{--                                <label style="border: solid #1a202c 1px">Add image--}}
-{{--                                    <input type="file" name="img[]" multiple hidden>--}}
-{{--                                </label>--}}
-{{--                            </div>--}}
-{{--                            <br>--}}
-{{--                            <div class="col-8 mx-auto">--}}
-{{--                                <input type="submit" name="submit" value="Save changes" id="submit-post">--}}
-{{--                            </div>--}}
-{{--                        </form>--}}
+                    <div class="post-edit-form post-edit{{$post['id']}} post-edit-changed-mind{{$post['id']}}" hidden>
+                        <form action="{{route('posts.update', ['id' => $post['id']])}}" method="post"
+                              enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            <div class="col-8 mx-auto">
+                                <label>
+                                    <input type="text" name="post-body" id="text">
+                                    <textarea class="form-control" name="post-body" id="text" rows="5"
+                                              style="width: 800px"></textarea>
+                                </label>
+                            </div>
+                            <div class="row container">
+                                @foreach($post->images as $image)
+                                    <div class="col-sm-3">
+                                        <div class="row">
+                                            <img src="{{asset('storage/post_pics/' . $image['image_name'])}}"
+                                                 alt="{{asset('storage/post_pics/' . $image['image_name'])}}"
+                                                 height="250px">
+                                        </div>
+                                        <div>
+                                            <button type="button" class="delete-post-image" data-post="{{$post['id']}}"
+                                                    data-image-name="{{$image['image_name']}}">Delete
+                                            </button>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="col-8 mx-auto">
+                                <label style="border: solid #1a202c 1px">Add image
+                                    <input type="file" name="img[]" multiple hidden>
+                                </label>
+                            </div>
+                            <br>
+                            <div class="col-8 mx-auto">
+                                <input type="submit" name="submit" value="Save changes" id="submit-post">
+                            </div>
+                        </form>
                         <button class="post-edit-form-hide"
                                 data-post-edit-form-hide="post-edit-changed-mind{{$post['id']}}">I changed my mind
                         </button>

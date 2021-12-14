@@ -37,10 +37,37 @@ export default {
                 //console.log('Array.from() = '+formImages);
                 data.append('body',postBody);
 
-                await axios.post('/posts', data).then(res => {
+                await axios
+                    .post('/posts', data)
+                    .then(res => {
                     context.commit('posts', res.data);
                     //console.log(res.data);
-                });
+                    });
+            } catch (error) {
+
+            }
+        },
+
+        async editPost(){
+            try {
+                const postBody = payload.body;
+                const formImages = payload.images;
+                const data = new FormData();
+                if (formImages) { //without this statement, if you pass no images, your body will not be used to create a post.
+                    for (let i = 0; i < formImages.length; i++) { //multiple files only with this
+                        data.append('files' + i, formImages[i]);
+                    }
+                }
+
+                //console.log('Array.from() = '+formImages);
+                data.append('body',postBody);
+
+                await axios
+                    .post('/posts', data)
+                    .then(res => {
+                        context.commit('posts', res.data);
+                        //console.log(res.data);
+                    });
             } catch (error) {
 
             }
@@ -48,8 +75,10 @@ export default {
 
         async getPosts(context){
             try {
-                await axios.get('/user-wall').then(res => {
-                    context.commit('posts', res.data);
+                await axios
+                    .get('/user-wall')
+                    .then(res => {
+                        context.commit('posts', res.data);
                     // console.log(res.data);
                 });
             } catch (error) {
@@ -58,13 +87,31 @@ export default {
 
         async addPostLike(context,payload){
             alert(payload.post_id)
-            try{
-                await axios.post('/likes', {
+            try {
+                await axios
+                    .post('/likes', {
                     post_id:payload.post_id
-                }).then(res => {
+                    })
+                    .then(res => {
                     //context.commit('posts', res.data);
                     // console.log(res.data);
-                });
+                    });
+            } catch (error) {
+
+            }
+        },
+
+        async deletePost(context, payload){
+            try {
+                console.log('vuex action === '+payload.id);
+                await axios
+                    .post('/posts/' + payload.id, {
+                        _method: 'DELETE'
+                    })
+                    .then(res => {
+                        //context.commit('posts', res.data);
+                        // console.log(res.data);
+                    });
             } catch (error) {
 
             }

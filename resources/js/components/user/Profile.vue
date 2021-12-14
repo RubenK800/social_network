@@ -9,8 +9,8 @@
                 <input type="button" v-on:click="uploadImage" value="upload">
             </form>
         </div>
-        <div>
-            <router-link to="/user-wall">Wall</router-link>
+        <div class="d-flex justify-content-center">
+            <router-link to="/user-wall">Go To Wall</router-link>
         </div>
     </div>
 </template>

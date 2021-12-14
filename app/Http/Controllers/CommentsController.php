@@ -16,9 +16,9 @@ class CommentsController extends Controller
 {
     public function store(Request $request){
         $image = $request->file('comment_image');
-        $commentText = $request->get('comment-text');
-        $postId = $request->get('postId');
-        $receiver_comment_id = $request->get('receiverCommentId');
+        $commentText = $request->get('comment_text');
+        $postId = $request->get('post_id');
+        $receiver_comment_id = $request->get('receiver_comment_id');
 
         if ($image) {
                 $commentId = $this->createComment($commentText,$postId, $receiver_comment_id);
@@ -36,12 +36,12 @@ class CommentsController extends Controller
 
     public function update($id, Request $request){
         $image = $request->file('comment_image');
-        $commentText = $request->get('comment-text');
+        $commentText = $request->get('comment_text');
 
         $comment = PostComment::where('id',$id)->first();
-        if (! Gate::allows('update-comment', $comment)) {
-            abort(403);
-        }
+//        if (! Gate::allows('update-comment', $comment)) {
+//            abort(403);
+//        }
 
         if ($image) {
             $this->updateComment($id,$commentText);
@@ -53,7 +53,7 @@ class CommentsController extends Controller
                 $this->updateComment($id,$commentText);
             }
         }
-        return Redirect::route('user-wall.index');
+        return $request->all();//return Redirect::route('user-wall.index');
     }
 
     public function destroy($id){
@@ -92,6 +92,7 @@ class CommentsController extends Controller
 
     private function updateComment($id,$newText):void {
         PostComment::where('id',$id)->update(['comment_text'=>$newText]);
+        //print_r('Id = '.$id.', newText = '.$newText);
     }
 
     private function saveCommentImage(int $commentId, string $imageName):void {

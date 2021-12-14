@@ -50,20 +50,23 @@ class PostsController extends Controller
     }
 
     public function update($id, Request $request){
-        $files = $request->file('img');
-        $postBody = $request->get('post-body');
+        $files = $request->all();
+        $postBody = $request->get('post_body');
 
 //        $comment = PostComment::where('id',$id)->first();
 //        if (! Gate::allows('update-comment', $comment)) {
 //            abort(403);
 //        }
 //        ddd($files);
+
         if ($files) {
             $this->updatePost($id,$postBody);
-            foreach($files as $file) {
-                $file->storeAs('post_pics', $file->getClientOriginalName());
-                $postImageName = $file->getClientOriginalName();
-                $this->savePostImage($id, $postImageName);
+            for($i = 0; $i<count($files); $i++) {
+                if (array_key_exists('files'.$i,$files)) {
+                    $files['files'.$i]->storeAs('post_pics', $files['files'.$i]->getClientOriginalName());
+                    $postImageName = $files['files'.$i]->getClientOriginalName();
+                    $this->savePostImage($id, $postImageName);
+                }
             }
         } else {
             if ($postBody) {

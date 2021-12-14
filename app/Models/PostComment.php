@@ -24,7 +24,7 @@ class PostComment extends Model
 
     public function dependentComments(): HasMany
     {
-        return $this->hasMany(PostComment::class, 'receiver_comment_id', 'id')->with(['dependentComments','user']);
+        return $this->hasMany(PostComment::class, 'receiver_comment_id', 'id')->with(['dependentComments','user', 'image']);
     }
 
     public function image(): HasOne{

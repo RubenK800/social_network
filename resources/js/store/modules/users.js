@@ -56,11 +56,11 @@ export default {
             }
         },
 
-        async uploadProfileAvatar(context, payload){
+        async uploadProfileAvatar(context, payload) {
             try {
                 const avatar = payload.avatar;
                 let data = new FormData();
-                data.append('file',avatar);
+                data.append('file', avatar);
                 const response = await axios.post('/avatar', data);
                 console.log("payload.avatar = ");
                 console.log(payload.avatar);
@@ -80,24 +80,29 @@ export default {
 
         register(context, payload) {
             console.log(payload.name + " " + payload.email + " " + payload.password + " " + payload.password_confirmation);
-            axios.post('/register', {
-                name: payload.name,
-                email: payload.email,
-                password: payload.password,
-                password_confirmation: payload.password_confirmation
-            }).then(response => {
-                console.log(response.data);
-            })
+            axios
+                .post('/register', {
+                    name: payload.name,
+                    email: payload.email,
+                    password: payload.password,
+                    password_confirmation: payload.password_confirmation
+                })
+                .then(response => {
+                    console.log(response.data);
+                })
         },
 
         logout() {
-            axios.post('logout').then(response => {
-                if (response.status === 302 || 401) {
-                    console.log('logout');
-                }
-            }).catch(error => {
-                console.log('oops');
-            });
+            axios
+                .post('logout')
+                .then(response => {
+                    if (response.status === 302 || 401) {
+                        console.log('logout');
+                    }
+                })
+                .catch(error => {
+                    console.log('oops');
+                });
             //return 'Hello Garry!!!'
         },
     }
